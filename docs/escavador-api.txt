@@ -1,0 +1,3042 @@
+API escavador:
+
+
+Consulta de processos
+Processo por numeração CNJ
+Retorna dados completos da capa de um processo judicial brasileiro a partir da numeração CNJ. Este endpoint fornece informações detalhadas da capa, incluindo partes envolvidas, audiências, dados de todas as fontes (tribunais) onde o processo tramitou, e outras informações relevantes para acompanhamento processual.
+
+Os dados retornados são da base do Escavador. Caso precise de informações mais recentes, utilize a rota de solicitar atualização de um processo e, depois da conclusão, consulte novamente os endpoints do processo.
+
+Contexto de Uso
+Este endpoint é fundamental para:
+
+Obter informações das partes envolvidas (autor, réu, advogados)
+Verificar dados da capa e audiências do processo
+Acessar dados de múltiplas instâncias (1º e 2º grau)
+Identificar assuntos jurídicos e classificações do processo
+OBS: Caso precise consultar as movimentações do processo, utilize a rota de movimentações de um processo.
+
+Formato do Número CNJ
+O número CNJ segue o padrão: NNNNNNN-DD.AAAA.J.TT.OOOO
+
+NNNNNNN: Número sequencial do processo
+DD: Dígitos verificadores
+AAAA: Ano de ajuizamento
+J: Segmento da justiça (8=Estadual, 4=Federal/TRF, 5=Trabalho, etc)
+TT: Tribunal
+OOOO: Vara/Origem
+Exemplo: 0018063-19.2013.8.26.0002
+
+Exemplo de requisição:
+
+curl -X GET -G "https://api.escavador.com/api/v2/processos/numero_cnj/0018063-19.2013.8.26.0002" \
+    -H "Authorization: Bearer {access_token}" \
+    -H "X-Requested-With: XMLHttpRequest"
+// Esse é um exemplo de resposta bem-sucedida.
+Exemplo de resposta (200):
+
+{
+  "numero_cnj": "1024000-20.2015.2.23.0000",
+  "titulo_polo_ativo": "Maria da Conceição de Oliveira",
+  "titulo_polo_passivo": "João da Silva",
+  "ano_inicio": 2015,
+  "data_inicio": "2015-11-21",
+  "estado_origem": {
+    "nome": "São Paulo",
+    "sigla": "SP"
+  },
+  "unidade_origem": {
+    "nome": "01 VARA JUIZADO ESPECIAL CIVEL DE CAMPINAS",
+    "endereco": "Avenida Francisco Xavier de Arruda Camargo, 300",
+    "classificacao": "JE - Juizado Especial",
+    "cidade": "São Paulo",
+    "estado": {
+      "nome": "São Paulo",
+      "sigla": "SP"
+    },
+    "tribunal_sigla": "TJSP"
+  },
+  "data_ultima_movimentacao": "2018-07-25",
+  "quantidade_movimentacoes": 103,
+  "fontes_tribunais_estao_arquivadas": false,
+  "data_ultima_verificacao": "2023-02-09T14:30:11+00:00",
+  "tempo_desde_ultima_verificacao": "há 1 mês",
+  "processos_relacionados": [
+    {
+      "numero": "8027909-02.2019.8.05.0000"
+    },
+    {
+      "numero": "8028150-73.2019.8.05.0000"
+    }
+  ],
+  "fontes": [
+    {
+      "id": 3,
+      "processo_fonte_id": 14626,
+      "descricao": "TJSP - 1º grau",
+      "nome": "Tribunal de Justiça de São Paulo",
+      "sigla": "TJSP",
+      "tipo": "TRIBUNAL",
+      "data_inicio": "2015-11-27",
+      "data_ultima_movimentacao": "2018-07-25",
+      "segredo_justica": null,
+      "arquivado": null,
+      "status_predito": "INATIVO",
+      "grau": 1,
+      "grau_formatado": "Primeiro Grau",
+      "fisico": false,
+      "sistema": "ESAJ",
+      "capa": {
+        "classe": "PROCEDIMENTO COMUM CIVEL",
+        "assunto": "RESPONSABILIDADE CIVIL",
+        "assuntos_normalizados": [
+          {
+            "id": 3642,
+            "nome": "Responsabilidade Civil",
+            "nome_com_pai": "DIREITO CIVIL > Responsabilidade Civil",
+            "path_completo": "DIREITO CIVIL | Responsabilidade Civil",
+            "bloqueado": false
+          }
+        ],
+        "assunto_principal_normalizado": {
+          "id": 3642,
+          "nome": "Responsabilidade Civil",
+          "nome_com_pai": "DIREITO CIVIL > Responsabilidade Civil",
+          "path_completo": "DIREITO CIVIL | Responsabilidade Civil",
+          "bloqueado": false
+        },
+        "area": "CIVEL",
+        "orgao_julgador": "01 VARA JUIZADO ESPECIAL CIVEL DE CAMPINAS",
+        "orgao_julgador_normalizado": {
+          "nome": "01 VARA JUIZADO ESPECIAL CIVEL DE CAMPINAS",
+          "endereco": "Avenida Francisco Xavier de Arruda Camargo, 300",
+          "classificacao": "JE - Juizado Especial",
+          "cidade": "São Paulo",
+          "estado": {
+            "nome": "São Paulo",
+            "sigla": "SP"
+          },
+          "tribunal_sigla": "TJSP"
+        },
+        "situacao": "Baixado",
+        "valor_causa": {
+          "valor": "50000.0000",
+          "moeda": "R$",
+          "valor_formatado": "R$ 50.000,00"
+        },
+        "data_distribuicao": "2015-11-27",
+        "data_arquivamento": null,
+        "informacoes_complementares": null
+      },
+      "audiencias": [
+        {
+          "tipo": "Instrução",
+          "data": "2024-10-17",
+          "quantidade_pessoas": 2,
+          "situacao": "Cancelada"
+        }
+      ],
+      "url": "https://esaj.tjsp.jus.br/cpopg/search.do?conversationId=&dadosConsulta.localPesquisa.cdLocal=-1&cbPesquisa=NUMPROC&dadosConsulta.tipoNuProcesso=UNIFICADO&numeroDigitoAnoUnificado=1024000-20.2015&foroNumeroUnificado=0000&dadosConsulta.valorConsultaNuUnificado=1024000-20.2015.2.23.0000&dadosConsulta.valorConsulta=",
+      "tribunal": {
+        "id": 102,
+        "nome": "Tribunal de Justiça de São Paulo",
+        "sigla": "TJSP",
+        "categoria": null
+      },
+      "quantidade_movimentacoes": 68,
+      "quantidade_envolvidos": 7,
+      "data_ultima_verificacao": "2023-02-09T14:30:11+00:00",
+      "envolvidos": [
+        {
+          "nome": "Maria da Conceição de Oliveira",
+          "quantidade_processos": 1,
+          "tipo_pessoa": "FISICA",
+          "advogados": [
+            {
+              "nome": "Marta Brandao de Oliveira",
+              "quantidade_processos": 21,
+              "tipo_pessoa": "FISICA",
+              "prefixo": null,
+              "sufixo": null,
+              "tipo": "ADVOGADO",
+              "tipo_normalizado": "Advogado",
+              "polo": "ADVOGADO",
+              "cpf": "00000000000",
+              "nome_normalizado": "Marta Brandao de Oliveira",
+              "oabs": [
+                {
+                  "uf": "SP",
+                  "tipo": "ADVOGADO",
+                  "numero": 123123
+                }
+              ]
+            },
+            {
+              "nome": "Fernando Marçal",
+              "quantidade_processos": 10,
+              "tipo_pessoa": "FISICA",
+              "prefixo": null,
+              "sufixo": null,
+              "tipo": "ADVOGADO",
+              "tipo_normalizado": "Advogado",
+              "polo": "ADVOGADO",
+              "cpf": "00000000000",
+              "nome_normalizado": "Fernando Marçal",
+              "oabs": [
+                {
+                  "uf": "SP",
+                  "tipo": "ADVOGADO",
+                  "numero": 123123
+                }
+              ]
+            }
+          ],
+          "prefixo": null,
+          "sufixo": null,
+          "tipo": "REQUERENTE",
+          "tipo_normalizado": "Requerente",
+          "polo": "ATIVO",
+          "cpf": "00000000000",
+          "nome_normalizado": "Maria da Conceição de Oliveira"
+        },
+        {
+          "nome": "Joao da Silva",
+          "quantidade_processos": 97,
+          "tipo_pessoa": "FISICA",
+          "advogados": [
+            {
+              "nome": "Antonio Carlos de Souza",
+              "quantidade_processos": 37,
+              "tipo_pessoa": "FISICA",
+              "prefixo": null,
+              "sufixo": null,
+              "tipo": "ADVOGADO",
+              "tipo_normalizado": "Advogado",
+              "polo": "ADVOGADO",
+              "cpf": "00000000000",
+              "nome_normalizado": "Antonio Carlos de Souza",
+              "oabs": [
+                {
+                  "uf": "SP",
+                  "tipo": "ADVOGADO",
+                  "numero": 123123
+                }
+              ]
+            },
+            {
+              "nome": "Fabiane Santos Carvalho",
+              "quantidade_processos": 33,
+              "tipo_pessoa": "FISICA",
+              "prefixo": null,
+              "sufixo": null,
+              "tipo": "ADVOGADO",
+              "tipo_normalizado": "Advogado",
+              "polo": "ADVOGADO",
+              "cpf": "00000000000",
+              "nome_normalizado": "Fabiane Santos Carvalho",
+              "oabs": [
+                {
+                  "uf": "SP",
+                  "tipo": "ADVOGADO",
+                  "numero": 123123
+                }
+              ]
+            }
+          ],
+          "prefixo": null,
+          "sufixo": null,
+          "tipo": "REQUERIDO",
+          "tipo_normalizado": "Requerido",
+          "polo": "PASSIVO",
+          "cpf": "00000000000",
+          "nome_normalizado": "Joao da Silva"
+        },
+        {
+          "nome": "Marcos Tira Teima",
+          "quantidade_processos": 126,
+          "tipo_pessoa": "FISICA",
+          "prefixo": null,
+          "sufixo": null,
+          "tipo": "JUIZ",
+          "tipo_normalizado": "Juiz",
+          "polo": "NENHUM"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "processo_fonte_id": 14566,
+      "descricao": "TJSP - 2º grau",
+      "nome": "Tribunal de Justiça de São Paulo",
+      "sigla": "TJSP",
+      "tipo": "TRIBUNAL",
+      "data_inicio": "2017-06-01",
+      "data_ultima_movimentacao": "2018-04-26",
+      "segredo_justica": null,
+      "arquivado": null,
+      "status_predito": "INATIVO",
+      "grau": 2,
+      "grau_formatado": "Segundo Grau",
+      "fisico": false,
+      "sistema": "ESAJ",
+      "capa": {
+        "classe": "APELACAO CIVEL",
+        "assunto": "DIREITO CIVIL-RESPONSABILIDADE CIVIL-INDENIZACAO POR DANO MORAL",
+        "assuntos_normalizados": [
+          {
+            "id": 3644,
+            "nome": "Indenização por Dano Moral",
+            "nome_com_pai": "Responsabilidade Civil > Indenização por Dano Moral",
+            "path_completo": "DIREITO CIVIL | Responsabilidade Civil | Indenização por Dano Moral",
+            "bloqueado": false
+          }
+        ],
+        "assunto_principal_normalizado": {
+          "id": 3644,
+          "nome": "Indenização por Dano Moral",
+          "nome_com_pai": "Responsabilidade Civil > Indenização por Dano Moral",
+          "path_completo": "DIREITO CIVIL | Responsabilidade Civil | Indenização por Dano Moral",
+          "bloqueado": false
+        },
+        "area": "CIVEL",
+        "orgao_julgador": "01 VARA JUIZADO ESPECIAL CIVEL DE CAMPINAS",
+        "orgao_julgador_normalizado": {
+          "nome": "01 VARA JUIZADO ESPECIAL CIVEL DE CAMPINAS",
+          "endereco": "Avenida Francisco Xavier de Arruda Camargo, 300",
+          "classificacao": "JE - Juizado Especial",
+          "cidade": "São Paulo",
+          "estado": {
+            "nome": "São Paulo",
+            "sigla": "SP"
+          },
+          "tribunal_sigla": "TJSP"
+        },
+        "situacao": "Baixado",
+        "valor_causa": {
+          "valor": "50000.0000",
+          "moeda": "R$",
+          "valor_formatado": "R$ 50.000,00"
+        },
+        "data_distribuicao": "2017-06-01",
+        "data_arquivamento": null,
+        "informacoes_complementares": null
+      },
+      "audiencias": [],
+      "url": "https://esaj.tjsp.jus.br/cposg/search.do?conversationId=&paginaConsulta=0&cbPesquisa=NUMPROC&numeroDigitoAnoUnificado=1024000-20.2015&foroNumeroUnificado=0000&dePesquisaNuUnificado=1024000-20.2015.8.22.0000&dePesquisaNuUnificado=UNIFICADO&dePesquisa=&tipoNuProcesso=UNIFICADO&uuidCaptcha=sajcaptcha_e6c6a295c5404a6887d81483bdd96048&g-recaptcha-response=",
+      "tribunal": {
+        "id": 102,
+        "nome": "Tribunal de Justiça de São Paulo",
+        "sigla": "TJSP",
+        "categoria": null
+      },
+      "quantidade_movimentacoes": 35,
+      "quantidade_envolvidos": 7,
+      "data_ultima_verificacao": "2023-02-09T14:30:00+00:00",
+      "envolvidos": [
+        {
+          "nome": "Maria da Conceição de Oliveira",
+          "quantidade_processos": 1,
+          "tipo_pessoa": "FISICA",
+          "advogados": [
+            {
+              "nome": "Fabiane Santos Carvalho",
+              "quantidade_processos": 21,
+              "tipo_pessoa": "FISICA",
+              "prefixo": null,
+              "sufixo": null,
+              "tipo": "ADVOGADO",
+              "tipo_normalizado": "Advogado",
+              "polo": "ADVOGADO",
+              "cpf": "00000000000",
+              "nome_normalizado": "Fabiane Santos Carvalho",
+              "oabs": [
+                {
+                  "uf": "SP",
+                  "tipo": "ADVOGADO",
+                  "numero": 123123
+                }
+              ]
+            },
+            {
+              "nome": "Antonio Carlos de Souza",
+              "quantidade_processos": 10,
+              "tipo_pessoa": "FISICA",
+              "prefixo": null,
+              "sufixo": null,
+              "tipo": "ADVOGADO",
+              "tipo_normalizado": "Advogado",
+              "polo": "ADVOGADO",
+              "cpf": "00000000000",
+              "nome_normalizado": "Antonio Carlos de Souza",
+              "oabs": [
+                {
+                  "uf": "SP",
+                  "tipo": "ADVOGADO",
+                  "numero": 123123
+                }
+              ]
+            }
+          ],
+          "prefixo": null,
+          "sufixo": null,
+          "tipo": "APELANTE",
+          "tipo_normalizado": "Apelante",
+          "polo": "ATIVO",
+          "cpf": "00000000000",
+          "nome_normalizado": "Maria da Conceicao de Oliveira"
+        },
+        {
+          "nome": "Joao da Silva",
+          "quantidade_processos": 97,
+          "tipo_pessoa": "FISICA",
+          "advogados": [
+            {
+              "nome": "",
+              "quantidade_processos": 37,
+              "tipo_pessoa": "FISICA",
+              "prefixo": null,
+              "sufixo": null,
+              "tipo": "ADVOGADO",
+              "tipo_normalizado": "Advogado",
+              "polo": "ADVOGADO",
+              "cpf": "00000000000",
+              "nome_normalizado": "Marta Brandao de Oliveira",
+              "oabs": [
+                {
+                  "uf": "SP",
+                  "tipo": "ADVOGADO",
+                  "numero": 123123
+                }
+              ]
+            },
+            {
+              "nome": "Fernando Marçal",
+              "quantidade_processos": 33,
+              "tipo_pessoa": "FISICA",
+              "prefixo": null,
+              "sufixo": null,
+              "tipo": "ADVOGADO",
+              "tipo_normalizado": "Advogado",
+              "polo": "ADVOGADO",
+              "cpf": "00000000000",
+              "nome_normalizado": "Fernando Marçal",
+              "oabs": [
+                {
+                  "uf": "SP",
+                  "tipo": "ADVOGADO",
+                  "numero": 123123
+                }
+              ]
+            }
+          ],
+          "prefixo": null,
+          "sufixo": null,
+          "tipo": "APELADO",
+          "tipo_normalizado": "Apelado",
+          "polo": "PASSIVO",
+          "cpf": "00000000000",
+          "nome_normalizado": "Joao da Silva"
+        },
+        {
+          "nome": "Ronaldo de Assis",
+          "quantidade_processos": 86,
+          "tipo_pessoa": "FISICA",
+          "prefixo": null,
+          "sufixo": null,
+          "tipo": "RELATOR",
+          "tipo_normalizado": "Juiz",
+          "polo": "NENHUM",
+          "cpf": "00000000000",
+          "nome_normalizado": "Ronaldo de Assis"
+        }
+      ]
+    }
+  ]
+}
+Exemplo de resposta (401):
+
+{
+  "error": "Unauthenticated"
+}
+Exemplo de resposta (402):
+
+{
+  "error": "Você não possui saldo em crédito da API."
+}
+Exemplo de resposta (404):
+
+{
+  "error": "NotFound"
+}
+HTTP Request
+GET api/v2/processos/numero_cnj/{numero}
+
+Headers
+Campo	Valor
+Authorization	Bearer {access_token}
+X-Requested-With	XMLHttpRequest
+URI Parameters
+Parâmetro	Tipo	Descrição
+numero	string	required Número único do processo no formato CNJ. Aceita formatos: NNNNNNN-DD.AAAA.J.TT.OOOO ou NNNNNNNDDAAAAJTTOOOO (20 dígitos sem formatação).
+Movimentações de um processo
+Retorna as movimentações de um processo a partir do número CNJ, que estão na base do Escavador. Caso precise atualizar as movimentações, utilize a rota de solicitar atualização de um processo.
+
+Acesse a página de respostas para detalhes sobre os dados retornados.
+
+Exemplo de requisição:
+
+curl -X GET -G "https://api.escavador.com/api/v2/processos/numero_cnj/0018063-19.2013.8.26.0002/movimentacoes" \
+    -H "Authorization: Bearer {access_token}" \
+    -H "X-Requested-With: XMLHttpRequest"
+// Esse é um exemplo de resposta bem-sucedida.
+Exemplo de resposta (200):
+
+{
+  "items": [
+    {
+      "id": 853879,
+      "data": "2018-07-25",
+      "tipo": "ANDAMENTO",
+      "conteudo": "CERTIDAO DE CARTORIO EXPEDIDA",
+      "fonte": {
+        "fonte_id": 3,
+        "nome": "Tribunal de Justiça de São Paulo",
+        "tipo": "TRIBUNAL",
+        "sigla": "TJSP",
+        "grau": 1,
+        "grau_formatado": "Primeiro Grau"
+      }
+    },
+    {
+      "id": 853877,
+      "data": "2018-07-25",
+      "tipo": "ANDAMENTO",
+      "conteudo": "CERTIDAO DE CARTORIO EXPEDIDA",
+      "fonte": {
+        "fonte_id": 3,
+        "nome": "Tribunal de Justiça de São Paulo",
+        "tipo": "TRIBUNAL",
+        "sigla": "TJSP",
+        "grau": 1,
+        "grau_formatado": "Primeiro Grau"
+      }
+    },
+    {
+      "id": 853875,
+      "data": "2018-07-25",
+      "tipo": "ANDAMENTO",
+      "conteudo": "ARQUIVADO DEFINITIVAMENTE",
+      "fonte": {
+        "fonte_id": 3,
+        "nome": "Tribunal de Justiça de São Paulo",
+        "tipo": "TRIBUNAL",
+        "sigla": "TJSP",
+        "grau": 1,
+        "grau_formatado": "Primeiro Grau"
+      }
+    },
+    {
+      "id": 853881,
+      "data": "2018-06-05",
+      "tipo": "ANDAMENTO",
+      "conteudo": "SUSPENSAO DO PRAZO",
+      "fonte": {
+        "fonte_id": 3,
+        "nome": "Tribunal de Justiça de São Paulo",
+        "tipo": "TRIBUNAL",
+        "sigla": "TJSP",
+        "grau": 1,
+        "grau_formatado": "Primeiro Grau"
+      }
+    },
+    {
+      "id": 853883,
+      "data": "2018-06-02",
+      "tipo": "ANDAMENTO",
+      "conteudo": "SUSPENSAO DO PRAZO",
+      "fonte": {
+        "fonte_id": 3,
+        "nome": "Tribunal de Justiça de São Paulo",
+        "tipo": "TRIBUNAL",
+        "sigla": "TJSP",
+        "grau": 1,
+        "grau_formatado": "Primeiro Grau"
+      }
+    },
+    {
+      "id": 853885,
+      "data": "2018-05-24",
+      "tipo": "ANDAMENTO",
+      "conteudo": "CERTIDAO DE PUBLICACAO EXPEDIDA",
+      "fonte": {
+        "fonte_id": 3,
+        "nome": "Tribunal de Justiça de São Paulo",
+        "tipo": "TRIBUNAL",
+        "sigla": "TJSP",
+        "grau": 1,
+        "grau_formatado": "Primeiro Grau"
+      }
+    },
+    {
+      "id": 853887,
+      "data": "2018-05-23",
+      "tipo": "ANDAMENTO",
+      "conteudo": "REMETIDO AO DJE",
+      "fonte": {
+        "fonte_id": 3,
+        "nome": "Tribunal de Justiça de São Paulo",
+        "tipo": "TRIBUNAL",
+        "sigla": "TJSP",
+        "grau": 1,
+        "grau_formatado": "Primeiro Grau"
+      }
+    },
+    {
+      "id": 853889,
+      "data": "2018-05-10",
+      "tipo": "ANDAMENTO",
+      "conteudo": "PROFERIDO DESPACHO",
+      "fonte": {
+        "fonte_id": 3,
+        "nome": "Tribunal de Justiça de São Paulo",
+        "tipo": "TRIBUNAL",
+        "sigla": "TJSP",
+        "grau": 1,
+        "grau_formatado": "Primeiro Grau"
+      }
+    },
+    {
+      "id": 853896,
+      "data": "2018-05-04",
+      "tipo": "ANDAMENTO",
+      "conteudo": "DECISAO DE 2ª INSTANCIA - RECURSO NAO PROVIDO - JUNTADA",
+      "fonte": {
+        "fonte_id": 3,
+        "nome": "Tribunal de Justiça de São Paulo",
+        "tipo": "TRIBUNAL",
+        "sigla": "TJSP",
+        "grau": 1,
+        "grau_formatado": "Primeiro Grau"
+      }
+    },
+    {
+      "id": 853895,
+      "data": "2018-05-04",
+      "tipo": "ANDAMENTO",
+      "conteudo": "EMBARGOS DE DECLARACAO ACOLHIDOS",
+      "fonte": {
+        "fonte_id": 3,
+        "nome": "Tribunal de Justiça de São Paulo",
+        "tipo": "TRIBUNAL",
+        "sigla": "TJSP",
+        "grau": 1,
+        "grau_formatado": "Primeiro Grau"
+      }
+    },
+    {
+      "id": 853893,
+      "data": "2018-05-04",
+      "tipo": "ANDAMENTO",
+      "conteudo": "TRANSITO EM JULGADO AS PARTES - PROC. EM ANDAMENTO",
+      "fonte": {
+        "fonte_id": 3,
+        "nome": "Tribunal de Justiça de São Paulo",
+        "tipo": "TRIBUNAL",
+        "sigla": "TJSP",
+        "grau": 1,
+        "grau_formatado": "Primeiro Grau"
+      }
+    },
+    {
+      "id": 853891,
+      "data": "2018-05-04",
+      "tipo": "ANDAMENTO",
+      "conteudo": "CONCLUSOS PARA DESPACHO",
+      "fonte": {
+        "fonte_id": 3,
+        "nome": "Tribunal de Justiça de São Paulo",
+        "tipo": "TRIBUNAL",
+        "sigla": "TJSP",
+        "grau": 1,
+        "grau_formatado": "Primeiro Grau"
+      }
+    },
+    {
+      "id": 853897,
+      "data": "2018-04-26",
+      "tipo": "ANDAMENTO",
+      "conteudo": "RECEBIDOS OS AUTOS DO TRIBUNAL DE JUSTICA",
+      "fonte": {
+        "fonte_id": 3,
+        "nome": "Tribunal de Justiça de São Paulo",
+        "tipo": "TRIBUNAL",
+        "sigla": "TJSP",
+        "grau": 1,
+        "grau_formatado": "Primeiro Grau"
+      }
+    },
+    {
+      "id": 849990,
+      "data": "2018-04-26",
+      "tipo": "ANDAMENTO",
+      "conteudo": "EXPEDIDO CERTIDAO",
+      "fonte": {
+        "fonte_id": 6,
+        "nome": "Tribunal de Justiça de São Paulo",
+        "tipo": "TRIBUNAL",
+        "sigla": "TJSP",
+        "grau": 2,
+        "grau_formatado": "Segundo Grau"
+      }
+    },
+    {
+      "id": 849988,
+      "data": "2018-04-26",
+      "tipo": "ANDAMENTO",
+      "conteudo": "BAIXA DEFINITIVA",
+      "fonte": {
+        "fonte_id": 6,
+        "nome": "Tribunal de Justiça de São Paulo",
+        "tipo": "TRIBUNAL",
+        "sigla": "TJSP",
+        "grau": 2,
+        "grau_formatado": "Segundo Grau"
+      }
+    },
+    {
+      "id": 849986,
+      "data": "2018-04-26",
+      "tipo": "ANDAMENTO",
+      "conteudo": "EXPEDIDO CERTIDAO DE BAIXA DE RECURSO",
+      "fonte": {
+        "fonte_id": 6,
+        "nome": "Tribunal de Justiça de São Paulo",
+        "tipo": "TRIBUNAL",
+        "sigla": "TJSP",
+        "grau": 2,
+        "grau_formatado": "Segundo Grau"
+      }
+    },
+    {
+      "id": 849992,
+      "data": "2018-03-28",
+      "tipo": "ANDAMENTO",
+      "conteudo": "EXPEDIDO CERTIDAO",
+      "fonte": {
+        "fonte_id": 6,
+        "nome": "Tribunal de Justiça de São Paulo",
+        "tipo": "TRIBUNAL",
+        "sigla": "TJSP",
+        "grau": 2,
+        "grau_formatado": "Segundo Grau"
+      }
+    },
+    {
+      "id": 849994,
+      "data": "2018-03-26",
+      "tipo": "ANDAMENTO",
+      "conteudo": "JULGADO VIRTUALMENTE",
+      "fonte": {
+        "fonte_id": 6,
+        "nome": "Tribunal de Justiça de São Paulo",
+        "tipo": "TRIBUNAL",
+        "sigla": "TJSP",
+        "grau": 2,
+        "grau_formatado": "Segundo Grau"
+      }
+    },
+    {
+      "id": 849998,
+      "data": "2018-03-06",
+      "tipo": "ANDAMENTO",
+      "conteudo": "EXPEDIDO CERTIDAO",
+      "fonte": {
+        "fonte_id": 6,
+        "nome": "Tribunal de Justiça de São Paulo",
+        "tipo": "TRIBUNAL",
+        "sigla": "TJSP",
+        "grau": 2,
+        "grau_formatado": "Segundo Grau"
+      }
+    },
+    {
+      "id": 849996,
+      "data": "2018-03-06",
+      "tipo": "ANDAMENTO",
+      "conteudo": "CONCLUSOS PARA O RELATOR (EXPEDIDO TERMO COM CONCLUSAO)",
+      "fonte": {
+        "fonte_id": 6,
+        "nome": "Tribunal de Justiça de São Paulo",
+        "tipo": "TRIBUNAL",
+        "sigla": "TJSP",
+        "grau": 2,
+        "grau_formatado": "Segundo Grau"
+      }
+    }
+  ],
+  "links": {
+    "next": "https://api.escavador.com/api/v2/processos/numero_cnj/1024000-20.2015.8.22.0000/movimentacoes?cursor=eyJkYXRhIjoiMjAxOC0wMy0wNiAwMDowMDowMCIsIm1vdmltZW50YWNhb19pZCI6ODQ5OTk2LCJfcG9pbnRzVG9OZXh0SXRlbXMiOnRydWV9&li=216029777"
+  },
+  "paginator": {
+    "per_page": 20
+  }
+}
+Exemplo de resposta (401):
+
+{
+  "error": "Unauthenticated"
+}
+Exemplo de resposta (402):
+
+{
+  "error": "Você não possui saldo em crédito da API."
+}
+Exemplo de resposta (404):
+
+{
+  "error": "NotFound"
+}
+HTTP Request
+GET api/v2/processos/numero_cnj/{numero}/movimentacoes
+
+Headers
+Campo	Valor
+Authorization	Bearer {access_token}
+X-Requested-With	XMLHttpRequest
+URI Parameters
+Parâmetro	Tipo	Descrição
+numero	string	Número único do processo. Obrigatório estar no formato de CNJ.
+Exemplo: 0000000-00.0000.0.00.0000
+Query Parameters
+Parâmetro	Status	Descrição
+limit	opcional	Quantidade de movimentações por página. Pode ser 50, 100 ou 500.
+Processos do envolvido por Nome ou CPF/CNPJ
+Retorna os processos de um envolvido a partir do nome ou CPF/CNPJ.
+
+Ao buscar processos pelo CPF, pode ocorrer da pessoa em questão possuir homônimos, o que torna o nome do CPF informado não único no Brasil. Além disso, se os processos em que essa pessoa esteja envolvida não possuírem o CPF informado nos sistemas dos Tribunais, os resultados podem não ser retornados. Nesse caso, é recomendável realizar a busca pelo nome da parte e filtrar pelo estado da pessoa, o que cobre a grande maioria dos casos. Para saber mais sobre o algoritmo de matching, acesse a página da Central de Ajuda.
+Acesse a página de respostas para detalhes sobre os dados retornados.
+
+Exemplo de requisição:
+
+curl -X GET -G "https://api.escavador.com/api/v2/envolvido/processos?nome=Tiago+Azevedo+Souza" \
+    -H "Authorization: Bearer {access_token}" \
+    -H "X-Requested-With: XMLHttpRequest"
+// Esse é um exemplo de resposta bem-sucedida.
+Exemplo de resposta (200):
+
+{
+  "envolvido_encontrado": {
+    "nome": "Engenharia e Construcoes Ltda",
+    "tipo_pessoa": "JURIDICA",
+    "quantidade_processos": 2
+  },
+  "items": [
+    {
+      "numero_cnj": "1060225-21.2023.5.56.0002",
+      "titulo_polo_ativo": "Joao da Silva",
+      "titulo_polo_passivo": "Empresa de Engenharia e outros",
+      "ano_inicio": 2023,
+      "data_inicio": "2023-03-11",
+      "estado_origem": {
+        "nome": "São Paulo",
+        "sigla": "SP"
+      },
+      "unidade_origem": {
+        "nome": "01 VARA JUIZADO ESPECIAL CIVEL DE CAMPINAS",
+        "endereco": "Avenida Francisco Xavier de Arruda Camargo, 300",
+        "classificacao": "JE - Juizado Especial",
+        "cidade": "São Paulo",
+        "estado": {
+          "nome": "São Paulo",
+          "sigla": "SP"
+        },
+        "tribunal_sigla": "TJSP"
+      },
+      "data_ultima_movimentacao": "2023-03-11",
+      "quantidade_movimentacoes": 2,
+      "fontes_tribunais_estao_arquivadas": false,
+      "data_ultima_verificacao": "2023-03-14T19:00:14+00:00",
+      "tempo_desde_ultima_verificacao": "há 15 minutos",
+      "processos_relacionados": [
+        {
+          "numero": "8027909-02.2019.8.05.0000"
+        },
+        {
+          "numero": "8028150-73.2019.8.05.0000"
+        }
+      ],
+      "fontes": [
+        {
+          "id": 47,
+          "processo_fonte_id": 1048903,
+          "descricao": "TRT-2 - 1º grau",
+          "nome": "Tribunal Regional do Trabalho da 2ª Região",
+          "sigla": "TRT-2",
+          "tipo": "TRIBUNAL",
+          "data_inicio": "2023-03-11",
+          "data_ultima_movimentacao": "2023-03-11",
+          "segredo_justica": false,
+          "arquivado": null,
+          "status_predito": "ATIVO",
+          "grau": 1,
+          "grau_formatado": "Primeiro Grau",
+          "fisico": false,
+          "sistema": "PJE",
+          "capa": {
+            "classe": "ACAO TRABALHISTA - RITO ORDINARIO",
+            "assunto": "SALARIO POR FORA - INTEGRACAO",
+            "assuntos_normalizados": [
+              {
+                "id": 6870,
+                "nome": "Horas Extras",
+                "nome_com_pai": "Duração do Trabalho > Horas Extras",
+                "path_completo": "DIREITO DO TRABALHO | Direito Individual do Trabalho  | Duração do Trabalho | Horas Extras",
+                "bloqueado": false
+              },
+              {
+                "id": 7041,
+                "nome": "Salário por Fora - Integração",
+                "nome_com_pai": "Salário/Diferença Salarial > Salário por Fora - Integração",
+                "path_completo": "DIREITO DO TRABALHO | Direito Individual do Trabalho  | Verbas Remuneratórias, Indenizatórias e Benefícios | Salário/Diferença Salarial | Salário por Fora - Integração",
+                "bloqueado": false
+              }
+            ],
+            "assunto_principal_normalizado": {
+              "id": 7041,
+              "nome": "Salário por Fora - Integração",
+              "nome_com_pai": "Salário/Diferença Salarial > Salário por Fora - Integração",
+              "path_completo": "DIREITO DO TRABALHO | Direito Individual do Trabalho  | Verbas Remuneratórias, Indenizatórias e Benefícios | Salário/Diferença Salarial | Salário por Fora - Integração",
+              "bloqueado": false
+            },
+            "area": "TRABALHISTA",
+            "orgao_julgador": "01 VARA JUIZADO ESPECIAL CIVEL DE CAMPINAS",
+            "orgao_julgador_normalizado": {
+              "nome": "01 VARA JUIZADO ESPECIAL CIVEL DE CAMPINAS",
+              "endereco": "Avenida Francisco Xavier de Arruda Camargo, 300",
+              "classificacao": "JE - Juizado Especial",
+              "cidade": "São Paulo",
+              "estado": {
+                "nome": "São Paulo",
+                "sigla": "SP"
+              },
+              "tribunal_sigla": "TJSP"
+            },
+            "situacao": "Baixado",
+            "valor_causa": {
+              "valor": "310455.6100",
+              "moeda": "R$",
+              "valor_formatado": "R$ 310.455,61"
+            },
+            "data_distribuicao": "2023-03-11",
+            "data_arquivamento": null,
+            "informacoes_complementares": null
+          },
+          "url": "https://pje.trt2.jus.br/consultaprocessual/detalhe-processo/10003246720235020007",
+          "tribunal": {
+            "id": 13,
+            "nome": "Tribunal Regional do Trabalho da 2ª Região",
+            "sigla": "TRT-2",
+            "categoria": null
+          },
+          "quantidade_movimentacoes": 2,
+          "data_ultima_verificacao": "2023-03-14T19:00:14+00:00",
+          "envolvidos": [
+            {
+              "nome": "Joao da Silva",
+              "quantidade_processos": 1,
+              "tipo_pessoa": "FISICA",
+              "advogados": [
+                {
+                  "nome": "Paulo Roberto de Oliveira",
+                  "quantidade_processos": 3,
+                  "tipo_pessoa": "FISICA",
+                  "prefixo": null,
+                  "sufixo": null,
+                  "tipo": "ADVOGADO",
+                  "tipo_normalizado": "Advogado",
+                  "polo": "ADVOGADO",
+                  "cpf": "00000000000",
+                  "oabs": [
+                    {
+                      "uf": "SP",
+                      "tipo": "ADVOGADO",
+                      "numero": 123123
+                    }
+                  ]
+                },
+                {
+                  "nome": "Daniel Felipe Assis",
+                  "quantidade_processos": 8,
+                  "tipo_pessoa": "FISICA",
+                  "prefixo": null,
+                  "sufixo": null,
+                  "tipo": "ADVOGADO",
+                  "tipo_normalizado": "Advogado",
+                  "polo": "ADVOGADO",
+                  "oabs": [
+                    {
+                      "uf": "SP",
+                      "tipo": "ADVOGADO",
+                      "numero": 123123
+                    }
+                  ]
+                }
+              ],
+              "prefixo": null,
+              "sufixo": null,
+              "tipo": "RECLAMANTE",
+              "tipo_normalizado": "Reclamante",
+              "polo": "ATIVO",
+              "cpf": "00000000000"
+            },
+            {
+              "nome": "Empresa de Engenharia e outros",
+              "quantidade_processos": 2,
+              "tipo_pessoa": "JURIDICA",
+              "prefixo": null,
+              "sufixo": null,
+              "tipo": "RECLAMADO",
+              "tipo_normalizado": "Reclamado",
+              "polo": "PASSIVO",
+              "cnpj": "00000000000000"
+            },
+            {
+              "nome": "Empresa de Construcoes",
+              "quantidade_processos": 2,
+              "tipo_pessoa": "JURIDICA",
+              "prefixo": null,
+              "sufixo": null,
+              "tipo": "RECLAMADO",
+              "tipo_normalizado": "Reclamado",
+              "polo": "PASSIVO",
+              "cnpj": "00000000000000"
+            },
+            {
+              "nome": "Engenharia e Construcoes Ltda",
+              "quantidade_processos": 66,
+              "tipo_pessoa": "JURIDICA",
+              "prefixo": null,
+              "sufixo": null,
+              "tipo": "RECLAMADO",
+              "tipo_normalizado": "Reclamado",
+              "polo": "PASSIVO",
+              "cnpj": "00000000000000"
+            },
+            {
+              "nome": "Construtora e Incorporadora Ltda",
+              "quantidade_processos": 1,
+              "tipo_pessoa": "JURIDICA",
+              "prefixo": null,
+              "sufixo": null,
+              "tipo": "RECLAMADO",
+              "tipo_normalizado": "Reclamado",
+              "polo": "PASSIVO",
+              "cnpj": "00000000000000"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "numero_cnj": "0205615-29.2023.3.12.0026",
+      "titulo_polo_ativo": "Maria Almeida Sampaio",
+      "titulo_polo_passivo": "Engenharia e Construcoes Ltda",
+      "ano_inicio": 2023,
+      "data_inicio": "2023-03-10",
+      "data_ultima_movimentacao": "2023-03-10",
+      "quantidade_movimentacoes": 2,
+      "fontes_tribunais_estao_arquivadas": false,
+      "data_ultima_verificacao": "2023-03-14T19:00:14+00:00",
+      "tempo_desde_ultima_verificacao": "há 15 minutos",
+      "fontes": [
+        {
+          "id": 355,
+          "processo_fonte_id": 1048904,
+          "descricao": "TRT-20 - 1º grau",
+          "nome": "Tribunal Regional do Trabalho da 20ª Região",
+          "sigla": "TRT-20",
+          "tipo": "TRIBUNAL",
+          "data_inicio": "2023-03-10",
+          "data_ultima_movimentacao": "2023-03-10",
+          "segredo_justica": false,
+          "arquivado": null,
+          "grau": 1,
+          "grau_formatado": "Primeiro Grau",
+          "fisico": false,
+          "sistema": "PJE",
+          "capa": {
+            "classe": "ACAO TRABALHISTA - RITO ORDINARIO",
+            "assunto": "ISONOMIA/DIFERENCA SALARIAL",
+            "assuntos_normalizados": [
+              {
+                "id": 6793,
+                "nome": "isonomia/Diferença Salarial",
+                "nome_com_pai": "Enquadramento > isonomia/Diferença Salarial",
+                "path_completo": "DIREITO DO TRABALHO | Direito Individual do Trabalho  | Categoria Profissional Especial | Bancários | Enquadramento | isonomia/Diferença Salarial",
+                "bloqueado": false
+              },
+              {
+                "id": 6978,
+                "nome": "Adicional de Periculosidade",
+                "nome_com_pai": "Adicional > Adicional de Periculosidade",
+                "path_completo": "DIREITO DO TRABALHO | Direito Individual do Trabalho  | Verbas Remuneratórias, Indenizatórias e Benefícios | Adicional | Adicional de Periculosidade",
+                "bloqueado": false
+              }
+            ],
+            "assunto_principal_normalizado": {
+              "id": 6793,
+              "nome": "isonomia/Diferença Salarial",
+              "nome_com_pai": "Enquadramento > isonomia/Diferença Salarial",
+              "path_completo": "DIREITO DO TRABALHO | Direito Individual do Trabalho  | Categoria Profissional Especial | Bancários | Enquadramento | isonomia/Diferença Salarial",
+              "bloqueado": false
+            },
+            "area": "TRABALHISTA",
+            "orgao_julgador": "01 VARA JUIZADO ESPECIAL CIVEL DE CAMPINAS",
+            "orgao_julgador_normalizado": {
+              "nome": "01 VARA JUIZADO ESPECIAL CIVEL DE CAMPINAS",
+              "endereco": "Avenida Francisco Xavier de Arruda Camargo, 300",
+              "classificacao": "JE - Juizado Especial",
+              "cidade": "São Paulo",
+              "estado": {
+                "nome": "São Paulo",
+                "sigla": "SP"
+              },
+              "tribunal_sigla": "TJSP"
+            },
+            "valor_causa": {
+              "valor": "292319.7200",
+              "moeda": "R$",
+              "valor_formatado": "R$ 292.319,72"
+            },
+            "data_distribuicao": "2023-03-10",
+            "data_arquivamento": null,
+            "informacoes_complementares": null
+          },
+          "url": "https://pje.trt20.jus.br/consultaprocessual/detalhe-processo/00002054020235200002",
+          "tribunal": {
+            "id": 31,
+            "nome": "Tribunal Regional do Trabalho da 20ª Região",
+            "sigla": "TRT-20",
+            "categoria": null
+          },
+          "quantidade_movimentacoes": 2,
+          "data_ultima_verificacao": "2023-03-14T19:00:14+00:00",
+          "envolvidos": [
+            {
+              "nome": "Maria Almeida Sampaio",
+              "quantidade_processos": 1,
+              "tipo_pessoa": "FISICA",
+              "advogados": [
+                {
+                  "nome": "Petrucio Silveira",
+                  "quantidade_processos": 16,
+                  "tipo_pessoa": "FISICA",
+                  "prefixo": null,
+                  "sufixo": null,
+                  "tipo": "ADVOGADO",
+                  "tipo_normalizado": "Advogado",
+                  "polo": "ADVOGADO",
+                  "cpf": "00000000000",
+                  "oabs": [
+                    {
+                      "uf": "SE",
+                      "tipo": "ADVOGADO",
+                      "numero": 123123
+                    }
+                  ]
+                },
+                {
+                  "nome": "Kevin Correia Borges",
+                  "quantidade_processos": 8,
+                  "tipo_pessoa": "FISICA",
+                  "prefixo": null,
+                  "sufixo": null,
+                  "tipo": "ADVOGADO",
+                  "tipo_normalizado": "Advogado",
+                  "polo": "ADVOGADO",
+                  "cpf": "00000000000",
+                  "oabs": [
+                    {
+                      "uf": "SE",
+                      "tipo": "ADVOGADO",
+                      "numero": 123123
+                    }
+                  ]
+                }
+              ],
+              "prefixo": null,
+              "sufixo": null,
+              "tipo": "RECLAMANTE",
+              "tipo_normalizado": "Reclamante",
+              "polo": "ATIVO",
+              "cpf": "00000000000"
+            },
+            {
+              "nome": "Engenharia e Construcoes Ltda",
+              "quantidade_processos": 66,
+              "tipo_pessoa": "JURIDICA",
+              "prefixo": null,
+              "sufixo": null,
+              "tipo": "RECLAMADO",
+              "tipo_normalizado": "Reclamado",
+              "polo": "PASSIVO",
+              "cnpj": "00000000000000"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "links": {
+    "next": "https://api.escavador.com/api/v2/envolvido/processos?nome=Joao%20da%20Silva&cursor=eyJwcm9jZXNzby5kYXRhX2luaWNpbyI6IjIwMjItMDctMDUgMDA6MDA6MDAiLCJwcm9jZXNzby5pZCI6MTEwNjg3NSwiX3BvaW50c1RvTmV4dEl0ZW1zIjp0cnVlfQ&li=216025845"
+  },
+  "paginator": {
+    "per_page": 20
+  }
+}
+Exemplo de resposta (401):
+
+{
+  "error": "Unauthenticated"
+}
+Exemplo de resposta (402):
+
+{
+  "error": "Você não possui saldo em crédito da API."
+}
+Exemplo de resposta (404):
+
+{
+  "error": "NotFound"
+}
+HTTP Request
+GET api/v2/envolvido/processos
+
+Headers
+Campo	Valor
+Authorization	Bearer {access_token}
+X-Requested-With	XMLHttpRequest
+Query Parameters
+Parâmetro	Status	Descrição
+nome	opcional	Nome do envolvido. Obrigatório se cpf_cnpj não for enviado.
+cpf_cnpj	opcional	CPF/CNPJ do envolvido. Obrigatório se nome não for enviado.
+limit	opcional	Quantidade de processos por página. Pode ser 50 ou 100.
+tribunais[]	opcional	Filtra processos a partir das siglas de tribunais enviadas.
+incluir_homonimos	opcional	Inclui processos de envolvidos do mesmo nome que não identificamos o CPF. Disponível apenas para busca por CPF
+Default: false.
+status	opcional	Filtra processos a partir do status do processo, pode ser ATIVO ou INATIVO. Obs. A classificação do status é feito por IA e vai considerar a última atualização que possuímos do processo na nossa base.
+data_minima	opcional	Filtra processos que iniciaram após a data informada. A data deve ser estar no formato AAAA-MM-DD.
+data_maxima	opcional	Filtra processos que iniciaram antes da data informada. A data deve ser estar no formato AAAA-MM-DD e, caso a data minima seja enviada, deve ser maior que a data minima.
+Resumo de Processos do envolvido por Nome ou CPF/CNPJ
+Retorna a quantidade de processos de um envolvido a partir do nome ou CPF/CNPJ.
+
+Exemplo de requisição:
+
+curl -X GET -G "https://api.escavador.com/api/v2/envolvido/resumo?nome=Empresa+Fantasia+SA" \
+    -H "Authorization: Bearer {access_token}" \
+    -H "X-Requested-With: XMLHttpRequest"
+// Esse é um exemplo de resposta bem-sucedida.
+Exemplo de resposta (200):
+
+{
+  "nome": "Empresa Fantasia S.A",
+  "tipo_pessoa": "JURIDICA",
+  "quantidade_processos": 3516803
+}
+Exemplo de resposta (401):
+
+{
+  "error": "Unauthenticated"
+}
+Exemplo de resposta (404):
+
+{
+  "error": "NotFound"
+}
+HTTP Request
+GET api/v2/envolvido/resumo
+
+Headers
+Campo	Valor
+Authorization	Bearer {access_token}
+X-Requested-With	XMLHttpRequest
+Query Parameters
+Parâmetro	Status	Descrição
+nome	opcional	Nome do envolvido. Obrigatório se cpf_cnpj não for enviado.
+cpf_cnpj	opcional	CPF/CNPJ do envolvido. Obrigatório se nome não for enviado.
+Processos de um advogado por OAB
+Retorna os processos de um advogado a partir da OAB
+
+Acesse a página de respostas para detalhes sobre os dados retornados.
+
+Exemplo de requisição:
+
+curl -X GET -G "https://api.escavador.com/api/v2/advogado/processos?oab_estado=SP&oab_numero=123456" \
+    -H "Authorization: Bearer {access_token}" \
+    -H "X-Requested-With: XMLHttpRequest"
+// Esse é um exemplo de resposta bem-sucedida.
+Exemplo de resposta (200):
+
+{
+  "advogado_encontrado": {
+    "nome": "JOÃO DA SILVA",
+    "tipo": "ADVOGADO",
+    "quantidade_processos": 521
+  },
+  "items": [
+    {
+      "numero_cnj": "0000000-00.2022.2.03.0000",
+      "titulo_polo_ativo": "Marcio Castro Chagas",
+      "titulo_polo_passivo": "Mauro Emerson Gomes",
+      "ano_inicio": 2022,
+      "data_inicio": "2023-02-10",
+      "estado_origem": {
+        "nome": "São Paulo",
+        "sigla": "SP"
+      },
+      "unidade_origem": {
+        "nome": "01 VARA JUIZADO ESPECIAL CIVEL DE CAMPINAS",
+        "endereco": "Avenida Francisco Xavier de Arruda Camargo, 300",
+        "classificacao": "JE - Juizado Especial",
+        "cidade": "São Paulo",
+        "estado": {
+          "nome": "São Paulo",
+          "sigla": "SP"
+        },
+        "tribunal_sigla": "TJSP"
+      },
+      "data_ultima_movimentacao": "2023-02-10",
+      "quantidade_movimentacoes": 1,
+      "fontes_tribunais_estao_arquivadas": false,
+      "data_ultima_verificacao": "2023-03-14T18:06:59+00:00",
+      "tempo_desde_ultima_verificacao": "há 2 horas",
+      "processos_relacionados": [
+        {
+          "numero": "8027909-02.2019.8.05.0000"
+        },
+        {
+          "numero": "8028150-73.2019.8.05.0000"
+        }
+      ],
+      "fontes": [
+        {
+          "id": 1104,
+          "processo_fonte_id": 1125512,
+          "descricao": "TSE - 3º grau",
+          "nome": "Tribunal Superior Eleitoral",
+          "sigla": "TSE",
+          "tipo": "TRIBUNAL",
+          "data_inicio": "2023-02-10",
+          "data_ultima_movimentacao": "2023-02-10",
+          "segredo_justica": false,
+          "arquivado": null,
+          "status_predito": "ATIVO",
+          "grau": 3,
+          "grau_formatado": "Superior",
+          "fisico": false,
+          "sistema": "UNIFICADO",
+          "capa": {
+            "classe": "RECURSO ESPECIAL ELEITORAL",
+            "assunto": "DIREITO ELEITORAL",
+            "assuntos_normalizados": [
+              {
+                "id": 3388,
+                "nome": "Eleições",
+                "nome_com_pai": "Conselhos Regionais de Fiscalização Profissional e Afins > Eleições",
+                "path_completo": "DIREITO ADMINISTRATIVO E OUTRAS MATÉRIAS DE DIREITO PÚBLICO | Organização Político-administrativa / Administração Pública | Conselhos Regionais de Fiscalização Profissional e Afins | Eleições",
+                "bloqueado": false
+              },
+              {
+                "id": 3935,
+                "nome": "Propaganda eleitoral",
+                "nome_com_pai": "Campanha Eleitoral > Propaganda eleitoral",
+                "path_completo": "DIREITO ELEITORAL E PROCESSO ELEITORAL DO STF | Eleição | Campanha Eleitoral | Propaganda eleitoral",
+                "bloqueado": false
+              },
+              {
+                "id": 4564,
+                "nome": "DIREITO ELEITORAL",
+                "nome_com_pai": "DIREITO ELEITORAL",
+                "path_completo": "DIREITO ELEITORAL",
+                "bloqueado": false
+              },
+              {
+                "id": 4717,
+                "nome": "Eleições",
+                "nome_com_pai": "DIREITO ELEITORAL > Eleições",
+                "path_completo": "DIREITO ELEITORAL | Eleições",
+                "bloqueado": false
+              },
+              {
+                "id": 4904,
+                "nome": "Propaganda Política",
+                "nome_com_pai": "Partidos Políticos > Propaganda Política",
+                "path_completo": "DIREITO ELEITORAL | Partidos Políticos | Propaganda Política",
+                "bloqueado": false
+              },
+              {
+                "id": 5770,
+                "nome": "Propaganda Política - Propaganda Eleitoral - Impulsionamento",
+                "nome_com_pai": "Propaganda Política - Propaganda Eleitoral > Propaganda Política - Propaganda Eleitoral - Impulsionamento",
+                "path_completo": "DIREITO ELEITORAL | Eleições | Propaganda Política - Propaganda Eleitoral | Propaganda Política - Propaganda Eleitoral - Impulsionamento",
+                "bloqueado": false
+              }
+            ],
+            "assunto_principal_normalizado": {
+              "id": 4564,
+              "nome": "DIREITO ELEITORAL",
+              "nome_com_pai": "DIREITO ELEITORAL",
+              "path_completo": "DIREITO ELEITORAL",
+              "bloqueado": false
+            },
+            "area": null,
+            "orgao_julgador": "01 VARA JUIZADO ESPECIAL CIVEL DE CAMPINAS",
+            "orgao_julgador_normalizado": {
+              "nome": "01 VARA JUIZADO ESPECIAL CIVEL DE CAMPINAS",
+              "endereco": "Avenida Francisco Xavier de Arruda Camargo, 300",
+              "classificacao": "JE - Juizado Especial",
+              "cidade": "São Paulo",
+              "estado": {
+                "nome": "São Paulo",
+                "sigla": "SP"
+              },
+              "tribunal_sigla": "TJSP"
+            },
+            "situacao": "Baixado",
+            "valor_causa": {
+              "valor": null,
+              "moeda": null,
+              "valor_formatado": null
+            },
+            "data_distribuicao": "2023-02-10",
+            "data_arquivamento": null,
+            "informacoes_complementares": null
+          },
+          "url": "https://consultaunificadapje.tse.jus.br/#/public/resultado/0000000-00.2022.2.03.0000",
+          "tribunal": {
+            "id": 36,
+            "nome": "Tribunal Superior Eleitoral",
+            "sigla": "TSE",
+            "categoria": null
+          },
+          "quantidade_movimentacoes": 1,
+          "data_ultima_verificacao": "2023-03-14T18:06:59+00:00",
+          "envolvidos": [
+            {
+              "nome": "Marcio Castro Chagas",
+              "quantidade_processos": 1,
+              "tipo_pessoa": null,
+              "advogados": [
+                {
+                  "nome": "João Paulo de Silva",
+                  "quantidade_processos": 5,
+                  "tipo_pessoa": "FISICA",
+                  "prefixo": null,
+                  "sufixo": null,
+                  "tipo": "ADVOGADO",
+                  "tipo_normalizado": "Advogado",
+                  "polo": "ADVOGADO",
+                  "cpf": "00000000000",
+                  "oabs": [
+                    {
+                      "uf": "CE",
+                      "tipo": "ADVOGADO",
+                      "numero": 123023
+                    }
+                  ]
+                }
+              ],
+              "prefixo": null,
+              "sufixo": null,
+              "tipo": "AUTOR",
+              "tipo_normalizado": "Autor",
+              "polo": "ATIVO"
+            },
+            {
+              "nome": "Mauro Emerson Gomes",
+              "quantidade_processos": 1,
+              "tipo_pessoa": "JURIDICA",
+              "advogados": [
+                {
+                  "nome": "Roberta dos Santos Conceição",
+                  "quantidade_processos": 49,
+                  "tipo_pessoa": "FISICA",
+                  "prefixo": null,
+                  "sufixo": null,
+                  "tipo": "ADVOGADO",
+                  "tipo_normalizado": "Advogado",
+                  "polo": "ADVOGADO",
+                  "cpf": "00000000000",
+                  "oabs": [
+                    {
+                      "uf": "CE",
+                      "tipo": "ADVOGADO",
+                      "numero": 123123
+                    }
+                  ]
+                },
+                {
+                  "nome": "Luiz Carlos Silveira",
+                  "quantidade_processos": 31,
+                  "tipo_pessoa": "JURIDICA",
+                  "prefixo": null,
+                  "sufixo": null,
+                  "tipo": "ADVOGADO",
+                  "tipo_normalizado": "Advogado",
+                  "polo": "ADVOGADO",
+                  "oabs": [
+                    {
+                      "uf": "CE",
+                      "tipo": "ADVOGADO",
+                      "numero": 123123
+                    }
+                  ]
+                }
+              ],
+              "prefixo": null,
+              "sufixo": null,
+              "tipo": "REU",
+              "tipo_normalizado": "Réu",
+              "polo": "PASSIVO"
+            },
+            {
+              "nome": "Rede Servicos Online do Brasil Ltda",
+              "quantidade_processos": 10996,
+              "tipo_pessoa": "JURIDICA",
+              "advogados": [
+                {
+                  "nome": "Joana D'Arc de Souza",
+                  "quantidade_processos": 101,
+                  "tipo_pessoa": "FISICA",
+                  "prefixo": null,
+                  "sufixo": null,
+                  "tipo": "ADVOGADO",
+                  "tipo_normalizado": "Advogado",
+                  "polo": "ADVOGADO",
+                  "cpf": "00000000000",
+                  "oabs": [
+                    {
+                      "uf": "SP",
+                      "tipo": "ADVOGADO",
+                      "numero": 123123
+                    }
+                  ]
+                }
+              ],
+              "prefixo": null,
+              "sufixo": null,
+              "tipo": "REU",
+              "tipo_normalizado": "Réu",
+              "polo": "PASSIVO",
+              "cnpj": "00000000000000"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "links": {
+    "next": "https://api.escavador.com/api/v2/advogado/processos?oab_estado=SP&oab_numero=123123&cursor=eyJwcm9jZXNzby5kYXRhX2luaWNpbyI6IjIwMjEtMDEtMTkgMDA6MDA6MDAiLCJwcm9jZXNzby5pZCI6MTEwNzI0NCwiX3BvaW50c1RvTmV4dEl0ZW1zIjp0cnVlfQ&li=216038277"
+  },
+  "paginator": {
+    "per_page": 20
+  }
+}
+Exemplo de resposta (401):
+
+{
+  "error": "Unauthenticated"
+}
+Exemplo de resposta (402):
+
+{
+  "error": "Você não possui saldo em crédito da API."
+}
+Exemplo de resposta (404):
+
+{
+  "error": "NotFound"
+}
+HTTP Request
+GET api/v2/advogado/processos
+
+Headers
+Campo	Valor
+Authorization	Bearer {access_token}
+X-Requested-With	XMLHttpRequest
+Query Parameters
+Parâmetro	Status	Descrição
+oab_estado	obrigatório	Estado da OAB.
+oab_numero	obrigatório	Número da OAB.
+oab_tipo	opcional	Tipo da OAB, pode ser informado caso o mesmo número exista para diferentes tipos. Pode ser ADVOGADO, SUPLEMENTAR, ESTAGIARIO ou CONSULTOR_ESTRANGEIRO.
+limit	opcional	Quantidade de processos por página. Pode ser 50 ou 100.
+tribunais[]	opcional	Filtra processos a partir das siglas de tribunais enviadas.
+status	opcional	Filtra processos a partir do status do processo, pode ser ATIVO ou INATIVO. Obs. A classificação do status é feito por IA e vai considerar a última atualização que possuímos do processo na nossa base.
+data_minima	opcional	Filtra processos que iniciaram após a data informada. A data deve ser estar no formato AAAA-MM-DD.
+data_maxima	opcional	Filtra processos que iniciaram antes da data informada. A data deve ser estar no formato AAAA-MM-DD e, caso a data minima seja enviada, deve ser maior que a data minima.
+Resumo de processos do advogado por OAB
+Retorna um resumo do advogado a partir do oab, mostrando a quantidade de processos e o tipo da oab informada
+
+Exemplo de requisição:
+
+curl -X GET -G "https://api.escavador.com/api/v2/advogado/resumo?oab_estado=SP&oab_numero=123456" \
+    -H "Authorization: Bearer {access_token}" \
+    -H "X-Requested-With: XMLHttpRequest"
+// Esse é um exemplo de resposta bem-sucedida.
+Exemplo de resposta (200):
+
+{
+  "nome": "Fulano da Silva",
+  "tipo": "ADVOGADO",
+  "quantidade_processos": 153
+}
+Exemplo de resposta (401):
+
+{
+  "error": "Unauthenticated"
+}
+Exemplo de resposta (404):
+
+{
+  "error": "NotFound"
+}
+HTTP Request
+GET api/v2/advogado/resumo
+
+Headers
+Campo	Valor
+Authorization	Bearer {access_token}
+X-Requested-With	XMLHttpRequest
+Query Parameters
+Parâmetro	Status	Descrição
+oab_estado	obrigatório	Estado da OAB.
+oab_numero	obrigatório	Número da OAB.
+oab_tipo	opcional	Tipo da OAB, pode ser informado caso o mesmo número exista para diferentes tipos. Pode ser ADVOGADO, SUPLEMENTAR, ESTAGIARIO ou CONSULTOR_ESTRANGEIRO.
+Documentos públicos de um processo
+Retorna uma lista dos documentos públicos de um processo a partir da numeração CNJ, que estão na base do Escavador. Caso precise atualizar os documentos, utilize a rota de solicitar atualização de um processo com o parâmetro documentos_publicos=1.
+
+Exemplo de requisição:
+
+curl -X GET -G "https://api.escavador.com/api/v2/processos/numero_cnj/0018063-19.2013.8.26.0002/documentos-publicos" \
+    -H "Authorization: Bearer {access_token}" \
+    -H "X-Requested-With: XMLHttpRequest"
+// Esse é um exemplo de resposta bem-sucedida.
+Exemplo de resposta (200):
+
+{
+  "items": [
+    {
+      "id": 11404,
+      "titulo": "Despacho",
+      "descricao": "Despacho | Despacho",
+      "data": "2024-06-17 18:02:36",
+      "tipo": "PUBLICO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": 2,
+      "key": "M3VLQSs0M1ZoaVgwaVlEc3pqSldJWDViUkdkckdtYk9BQ2hnSDFOODQ0N2dUNlpCbVM5S1ZPakpvN2JGcGJMMWhuMlJFbDBCZXNjVHY5eHV5UE1BQnc9PQ==",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/M3VLQSs0M1ZoaVgwaVlEc3pqSldJWDViUkdkckdtYk9BQ2hnSDFOODQ0N2dUNlpCbVM5S1ZPakpvN2JGcGJMMWhuMlJFbDBCZXNjVHY5eHV5UE1BQnc9PQ=="
+      }
+    },
+    {
+      "id": 11333,
+      "titulo": "Despacho",
+      "descricao": "Despacho | Despacho",
+      "data": "2024-06-05 16:06:51",
+      "tipo": "PUBLICO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": null,
+      "key": "N2dGS0VWMFJoaUZyZFdsVzFja3pObDFiWFVwWE5sVndHRWpjSU9KWEg0MlpGeVpDYTFGSW5RbDBCeVlvM3NTSldJa0NCQ2hLZHpNOE4zR3dndG1BQ1E9PQ==",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/N2dGS0VWMFJoaUZyZFdsVzFja3pObDFiWFVwWE5sVndHRWpjSU9KWEg0MlpGeVpDYTFGSW5RbDBCeVlvM3NTSldJa0NCQ2hLZHpNOE4zR3dndG1BQ1E9PQ=="
+      }
+    },
+    {
+      "id": 10840,
+      "titulo": "Despacho",
+      "descricao": "Despacho | Despacho",
+      "data": "2024-04-09 19:39:16",
+      "tipo": "PUBLICO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": 1,
+      "key": "R3lDRlNWa1pIV1hWcDVZVEJrR1ZWUm5oZDFWSVZKcGpHTm1lV1FJZ1FRWFQwNFZCZkZ2ZlNkTlJKWlpSaGZMZGJXZ1h6eGFHWWdCQmNoR29QVE5ETGdndG1BQ0E9PQ==",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/R3lDRlNWa1pIV1hWcDVZVEJrR1ZWUm5oZDFWSVZKcGpHTm1lV1FJZ1FRWFQwNFZCZkZ2ZlNkTlJKWlpSaGZMZGJXZ1h6eGFHWWdCQmNoR29QVE5ETGdndG1BQ0E9PQ=="
+      }
+    },
+    {
+      "id": 14826,
+      "titulo": "Despacho",
+      "descricao": "Despacho | Despacho",
+      "data": "2024-03-19 18:25:33",
+      "tipo": "PUBLICO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": 1,
+      "key": "O2VSU1lGQm5rR0Zra1dIVU5ka3lRMjFhYkpKaFpYQ0pjS09LbXZWWFozVEdaRmZhU0lkSWRRcFFBeVdoTEpVQllSRWxaS1hBZGRkZk5RTXZnZ0FDZ1E9PQ==",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/O2VSU1lGQm5rR0Zra1dIVU5ka3lRMjFhYkpKaFpYQ0pjS09LbXZWWFozVEdaRmZhU0lkSWRRcFFBeVdoTEpVQllSRWxaS1hBZGRkZk5RTXZnZ0FDZ1E9PQ==O2VSU1lGQm5rR0Zra1dIVU5ka3lRMjFhYkpKaFpYQ0pjS09LbXZWWFozVEdaRmZhU0lkSWRRcFFBeVdoTEpVQllSRWxaS1hBZGRkZk5RTXZnZ0FDZ1E9PQ=="
+      }
+    },
+    {
+      "id": 10808,
+      "titulo": "Despacho",
+      "descricao": "Despacho | Despacho",
+      "data": "2024-03-08 10:37:25",
+      "tipo": "PUBLICO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": null,
+      "key": "T3REUllLa3dIRkpoZFhkbFpjRmZKa1ZFVlZNa1pUdmhlTmxJc1ZWQklRbElkVmdZVW5wWlRBQlhlVWdGSWRkblZsRFlGZ0FUQUJDWmdFQT09",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/T3REUllLa3dIRkpoZFhkbFpjRmZKa1ZFVlZNa1pUdmhlTmxJc1ZWQklRbElkVmdZVW5wWlRBQlhlVWdGSWRkblZsRFlGZ0FUQUJDWmdFQT09"
+      }
+    },
+    {
+      "id": 10041,
+      "titulo": "Acórdão",
+      "descricao": "Acórdão | Acórdão",
+      "data": "2024-02-22 22:38:37",
+      "tipo": "PUBLICO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": 2,
+      "key": "P0ZLVk5QVWdoRmpGZkRaWFlHVmxaM2RIVkhWeVZGRGpOT3JkRWRVU2ZGWGRHSmtNbEdpVFZRQWRBdURJaUVjRExBZ0VJQ0FCU0FSWk1BQ3c9PQ==",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/P0ZLVk5QVWdoRmpGZkRaWFlHVmxaM2RIVkhWeVZGRGpOT3JkRWRVU2ZGWGRHSmtNbEdpVFZRQWRBdURJaUVjRExBZ0VJQ0FCU0FSWk1BQ3c9PQ=="
+      }
+    },
+    {
+      "id": 18561,
+      "titulo": "Despacho",
+      "descricao": "Despacho | Despacho",
+      "data": "2024-02-07 14:54:00",
+      "tipo": "PUBLICO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": 2,
+      "key": "MzZWVkpWWkZWY1RqVkdWZFpFWkFaM1pUYzJGbWRWWnhYWFpjU1lGSWVrR0ZIWVZaVWxHSk9qTmxIa1dYVkZRQ0FJQ1lWQ0tETkFJQT09",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/MzZWVkpWWkZWY1RqVkdWZFpFWkFaM1pUYzJGbWRWWnhYWFpjU1lGSWVrR0ZIWVZaVWxHSk9qTmxIa1dYVkZRQ0FJQ1lWQ0tETkFJQT09"
+      }
+    },
+    {
+      "id": 95986,
+      "titulo": "Despacho",
+      "descricao": "Despacho | Despacho",
+      "data": "2024-01-09 13:52:05",
+      "tipo": "PUBLICO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": 1,
+      "key": "W1ZWS0pIVk5sRldIVm1Sa1VIV0ZZbVZpUVhJcElVVGpHZFNFWm9YWlpXZGZhT1pFa05ETkpZdFZDQlpDWWdFR3dNd0FDRU1NQkFDZz09",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/W1ZWS0pIVk5sRldIVm1Sa1VIV0ZZbVZpUVhJcElVVGpHZFNFWm9YWlpXZGZhT1pFa05ETkpZdFZDQlpDWWdFR3dNd0FDRU1NQkFDZz09"
+      }
+    },
+    {
+      "id": 94232,
+      "titulo": "Acórdão",
+      "descricao": "Acórdão | Acórdão",
+      "data": "2023-12-02 06:37:41",
+      "tipo": "PUBLICO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": 1,
+      "key": "D0ZGSk5Ka1dIZ0ZJb2RrVmZGWkZaUkpFQ0tkQ1FKbVZIUkRkVkdOT3BEUmQxQmhrVmZkU1pOTEl3WlZaQmdBdEFGQ0lFQ1dCT0NBZz09",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/D0ZGSk5Ka1dIZ0ZJb2RrVmZGWkZaUkpFQ0tkQ1FKbVZIUkRkVkdOT3BEUmQxQmhrVmZkU1pOTEl3WlZaQmdBdEFGQ0lFQ1dCT0NBZz09"
+      }
+    },
+    {
+      "id": 92398,
+      "titulo": "Decisão",
+      "descricao": "Decisão | Decisão",
+      "data": "2023-10-30 23:57:39",
+      "tipo": "PUBLICO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": 1,
+      "key": "T2hWVk5LQWZWWVJoa1lFQmxVZFluUlZGWnBjVk5XV3pGZFpJU05sRlFzQ0FXWkxFaUJKVVRTcFNlZ3BJQ0ZGZ1VIV0VBZ3dNR0NJTUFJQT09",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/T2hWVk5LQWZWWVJoa1lFQmxVZFluUlZGWnBjVk5XV3pGZFpJU05sRlFzQ0FXWkxFaUJKVVRTcFNlZ3BJQ0ZGZ1VIV0VBZ3dNR0NJTUFJQT09"
+      }
+    },
+    {
+      "id": 98409,
+      "titulo": "Sentença",
+      "descricao": "Sentença | Sentença",
+      "data": "2023-09-26 23:01:43",
+      "tipo": "PUBLICO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": 1,
+      "key": "O0ZLVlVGS0hZVlpaWW1sVVRlZE5qSUxWZkVIVnpWS2dFU0FGeFRZVmJZWkZIYkVVU2dGa0FFU1FZUVFNV2FSbUZJZ1pDQUFJQ0VDQmNBZz09",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/O0ZLVlVGS0hZVlpaWW1sVVRlZE5qSUxWZkVIVnpWS2dFU0FGeFRZVmJZWkZIYkVVU2dGa0FFU1FZUVFNV2FSbUZJZ1pDQUFJQ0VDQmNBZz09"
+      }
+    },
+    {
+      "id": 94210,
+      "titulo": "Ata da Audiência",
+      "descricao": "Ata da Audiência | Ata da Audiência",
+      "data": "2023-09-26 11:21:40",
+      "tipo": "PUBLICO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": 1,
+      "key": "P1ZaVk5MWldUVlZaRmZJVkpaTlFIZGRQYldwRmVUVUtkWEpGSU1WVEpXZW1GU1lGWk5LQ0pCQ2tXUlJIZW1HS1lWQ1NWZ1RHZ0NBSUVNR0lBZz09",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/P1ZaVk5MWldUVlZaRmZJVkpaTlFIZGRQYldwRmVUVUtkWEpGSU1WVEpXZW1GU1lGWk5LQ0pCQ2tXUlJIZW1HS1lWQ1NWZ1RHZ0NBSUVNR0lBZz09"
+      }
+    }
+  ],
+  "links": {
+    "next": null,
+    "prev": null,
+    "first": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos?page=1",
+    "last": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos?page=1"
+  },
+  "paginator": {
+    "current_page": 1,
+    "per_page": 20,
+    "total": 12,
+    "total_pages": 1
+  }
+}
+Exemplo de resposta (401):
+
+{
+  "error": "Unauthenticated"
+}
+Exemplo de resposta (402):
+
+{
+  "error": "Você não possui saldo em crédito da API."
+}
+Exemplo de resposta (404):
+
+{
+  "code": "NOT_FOUND",
+  "message": "Recurso não encontrado",
+  "errors": null,
+  "appends": null
+}
+Exemplo de resposta (422):
+
+{
+  "code": "NUMERO_CNJ_INVALIDO",
+  "message": "O número do processo não está no formato CNJ.",
+  "errors": null,
+  "appends": null
+}
+HTTP Request
+GET api/v2/processos/numero_cnj/{numero}/documentos-publicos
+
+Headers
+Campo	Valor
+Authorization	Bearer {access_token}
+X-Requested-With	XMLHttpRequest
+URI Parameters
+Parâmetro	Tipo	Descrição
+numero	string	Número único do processo. Obrigatório estar no formato de CNJ.
+Exemplo: 0000000-00.0000.0.00.0000
+Query Parameters
+Parâmetro	Status	Descrição
+limit	opcional	Quantidade de documentos por página. Pode ser 50 ou 100.
+Autos do processo (públicos e restritos)
+Retorna a lista paginada de todos os documentos de um processo (públicos e restritos), conhecidos como "autos", que estão na base do Escavador.
+
+O acesso a este endpoint requer que você tenha previamente solicitado a atualização do processo com a opção autos=1 e obtido o status SUCESSO. Essa etapa é necessária para garantir a permissão de acesso aos documentos restritos. Para obter os autos mais recentes, utilize a rota de solicitar atualização de um processo.
+
+Exemplo de requisição:
+
+curl -X GET -G "https://api.escavador.com/api/v2/processos/numero_cnj/0018063-19.2013.8.26.0002/autos" \
+    -H "Authorization: Bearer {access_token}" \
+    -H "X-Requested-With: XMLHttpRequest"
+// Esse é um exemplo de resposta bem-sucedida.
+Exemplo de resposta (200):
+
+{
+  "items": [
+    {
+      "id": 11404,
+      "titulo": "Despacho",
+      "descricao": "Despacho | Despacho",
+      "data": "2024-06-17 18:02:36",
+      "tipo": "RESTRITO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": 2,
+      "key": "M3VLQSs0M1ZoaVgwaVlEc3pqSldJWDViUkdkckdtYk9BQ2hnSDFOODQ0N2dUNlpCbVM5S1ZPakpvN2JGcGJMMWhuMlJFbDBCZXNjVHY5eHV5UE1BQnc9PQ==",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/M3VLQSs0M1ZoaVgwaVlEc3pqSldJWDViUkdkckdtYk9BQ2hnSDFOODQ0N2dUNlpCbVM5S1ZPakpvN2JGcGJMMWhuMlJFbDBCZXNjVHY5eHV5UE1BQnc9PQ=="
+      }
+    },
+    {
+      "id": 11333,
+      "titulo": "Despacho",
+      "descricao": "Despacho | Despacho",
+      "data": "2024-06-05 16:06:51",
+      "tipo": "RESTRITO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": null,
+      "key": "N2dGS0VWMFJoaUZyZFdsVzFja3pObDFiWFVwWE5sVndHRWpjSU9KWEg0MlpGeVpDYTFGSW5RbDBCeVlvM3NTSldJa0NCQ2hLZHpNOE4zR3dndG1BQ1E9PQ==",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/N2dGS0VWMFJoaUZyZFdsVzFja3pObDFiWFVwWE5sVndHRWpjSU9KWEg0MlpGeVpDYTFGSW5RbDBCeVlvM3NTSldJa0NCQ2hLZHpNOE4zR3dndG1BQ1E9PQ=="
+      }
+    },
+    {
+      "id": 10840,
+      "titulo": "Despacho",
+      "descricao": "Despacho | Despacho",
+      "data": "2024-04-09 19:39:16",
+      "tipo": "RESTRITO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": 1,
+      "key": "R3lDRlNWa1pIV1hWcDVZVEJrR1ZWUm5oZDFWSVZKcGpHTm1lV1FJZ1FRWFQwNFZCZkZ2ZlNkTlJKWlpSaGZMZGJXZ1h6eGFHWWdCQmNoR29QVE5ETGdndG1BQ0E9PQ==",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/R3lDRlNWa1pIV1hWcDVZVEJrR1ZWUm5oZDFWSVZKcGpHTm1lV1FJZ1FRWFQwNFZCZkZ2ZlNkTlJKWlpSaGZMZGJXZ1h6eGFHWWdCQmNoR29QVE5ETGdndG1BQ0E9PQ=="
+      }
+    },
+    {
+      "id": 14826,
+      "titulo": "Despacho",
+      "descricao": "Despacho | Despacho",
+      "data": "2024-03-19 18:25:33",
+      "tipo": "RESTRITO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": 1,
+      "key": "O2VSU1lGQm5rR0Zra1dIVU5ka3lRMjFhYkpKaFpYQ0pjS09LbXZWWFozVEdaRmZhU0lkSWRRcFFBeVdoTEpVQllSRWxaS1hBZGRkZk5RTXZnZ0FDZ1E9PQ==",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/O2VSU1lGQm5rR0Zra1dIVU5ka3lRMjFhYkpKaFpYQ0pjS09LbXZWWFozVEdaRmZhU0lkSWRRcFFBeVdoTEpVQllSRWxaS1hBZGRkZk5RTXZnZ0FDZ1E9PQ==O2VSU1lGQm5rR0Zra1dIVU5ka3lRMjFhYkpKaFpYQ0pjS09LbXZWWFozVEdaRmZhU0lkSWRRcFFBeVdoTEpVQllSRWxaS1hBZGRkZk5RTXZnZ0FDZ1E9PQ=="
+      }
+    },
+    {
+      "id": 10808,
+      "titulo": "Despacho",
+      "descricao": "Despacho | Despacho",
+      "data": "2024-03-08 10:37:25",
+      "tipo": "RESTRITO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": null,
+      "key": "T3REUllLa3dIRkpoZFhkbFpjRmZKa1ZFVlZNa1pUdmhlTmxJc1ZWQklRbElkVmdZVW5wWlRBQlhlVWdGSWRkblZsRFlGZ0FUQUJDWmdFQT09",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/T3REUllLa3dIRkpoZFhkbFpjRmZKa1ZFVlZNa1pUdmhlTmxJc1ZWQklRbElkVmdZVW5wWlRBQlhlVWdGSWRkblZsRFlGZ0FUQUJDWmdFQT09"
+      }
+    },
+    {
+      "id": 10041,
+      "titulo": "Acórdão",
+      "descricao": "Acórdão | Acórdão",
+      "data": "2024-02-22 22:38:37",
+      "tipo": "RESTRITO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": 2,
+      "key": "P0ZLVk5QVWdoRmpGZkRaWFlHVmxaM2RIVkhWeVZGRGpOT3JkRWRVU2ZGWGRHSmtNbEdpVFZRQWRBdURJaUVjRExBZ0VJQ0FCU0FSWk1BQ3c9PQ==",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/P0ZLVk5QVWdoRmpGZkRaWFlHVmxaM2RIVkhWeVZGRGpOT3JkRWRVU2ZGWGRHSmtNbEdpVFZRQWRBdURJaUVjRExBZ0VJQ0FCU0FSWk1BQ3c9PQ=="
+      }
+    },
+    {
+      "id": 18561,
+      "titulo": "Despacho",
+      "descricao": "Despacho | Despacho",
+      "data": "2024-02-07 14:54:00",
+      "tipo": "PUBLICO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": 2,
+      "key": "MzZWVkpWWkZWY1RqVkdWZFpFWkFaM1pUYzJGbWRWWnhYWFpjU1lGSWVrR0ZIWVZaVWxHSk9qTmxIa1dYVkZRQ0FJQ1lWQ0tETkFJQT09",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/MzZWVkpWWkZWY1RqVkdWZFpFWkFaM1pUYzJGbWRWWnhYWFpjU1lGSWVrR0ZIWVZaVWxHSk9qTmxIa1dYVkZRQ0FJQ1lWQ0tETkFJQT09"
+      }
+    },
+    {
+      "id": 95986,
+      "titulo": "Despacho",
+      "descricao": "Despacho | Despacho",
+      "data": "2024-01-09 13:52:05",
+      "tipo": "PUBLICO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": 1,
+      "key": "W1ZWS0pIVk5sRldIVm1Sa1VIV0ZZbVZpUVhJcElVVGpHZFNFWm9YWlpXZGZhT1pFa05ETkpZdFZDQlpDWWdFR3dNd0FDRU1NQkFDZz09",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/W1ZWS0pIVk5sRldIVm1Sa1VIV0ZZbVZpUVhJcElVVGpHZFNFWm9YWlpXZGZhT1pFa05ETkpZdFZDQlpDWWdFR3dNd0FDRU1NQkFDZz09"
+      }
+    },
+    {
+      "id": 94232,
+      "titulo": "Acórdão",
+      "descricao": "Acórdão | Acórdão",
+      "data": "2023-12-02 06:37:41",
+      "tipo": "RESTRITO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": 1,
+      "key": "D0ZGSk5Ka1dIZ0ZJb2RrVmZGWkZaUkpFQ0tkQ1FKbVZIUkRkVkdOT3BEUmQxQmhrVmZkU1pOTEl3WlZaQmdBdEFGQ0lFQ1dCT0NBZz09",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/D0ZGSk5Ka1dIZ0ZJb2RrVmZGWkZaUkpFQ0tkQ1FKbVZIUkRkVkdOT3BEUmQxQmhrVmZkU1pOTEl3WlZaQmdBdEFGQ0lFQ1dCT0NBZz09"
+      }
+    },
+    {
+      "id": 92398,
+      "titulo": "Decisão",
+      "descricao": "Decisão | Decisão",
+      "data": "2023-10-30 23:57:39",
+      "tipo": "RESTRITO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": 1,
+      "key": "T2hWVk5LQWZWWVJoa1lFQmxVZFluUlZGWnBjVk5XV3pGZFpJU05sRlFzQ0FXWkxFaUJKVVRTcFNlZ3BJQ0ZGZ1VIV0VBZ3dNR0NJTUFJQT09",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/T2hWVk5LQWZWWVJoa1lFQmxVZFluUlZGWnBjVk5XV3pGZFpJU05sRlFzQ0FXWkxFaUJKVVRTcFNlZ3BJQ0ZGZ1VIV0VBZ3dNR0NJTUFJQT09"
+      }
+    },
+    {
+      "id": 98409,
+      "titulo": "Sentença",
+      "descricao": "Sentença | Sentença",
+      "data": "2023-09-26 23:01:43",
+      "tipo": "RESTRITO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": 1,
+      "key": "O0ZLVlVGS0hZVlpaWW1sVVRlZE5qSUxWZkVIVnpWS2dFU0FGeFRZVmJZWkZIYkVVU2dGa0FFU1FZUVFNV2FSbUZJZ1pDQUFJQ0VDQmNBZz09",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/O0ZLVlVGS0hZVlpaWW1sVVRlZE5qSUxWZkVIVnpWS2dFU0FGeFRZVmJZWkZIYkVVU2dGa0FFU1FZUVFNV2FSbUZJZ1pDQUFJQ0VDQmNBZz09"
+      }
+    },
+    {
+      "id": 94210,
+      "titulo": "Ata da Audiência",
+      "descricao": "Ata da Audiência | Ata da Audiência",
+      "data": "2023-09-26 11:21:40",
+      "tipo": "RESTRITO",
+      "extensao_arquivo": "pdf",
+      "quantidade_paginas": 1,
+      "key": "P1ZaVk5MWldUVlZaRmZJVkpaTlFIZGRQYldwRmVUVUtkWEpGSU1WVEpXZW1GU1lGWk5LQ0pCQ2tXUlJIZW1HS1lWQ1NWZ1RHZ0NBSUVNR0lBZz09",
+      "links": {
+        "api": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos/P1ZaVk5MWldUVlZaRmZJVkpaTlFIZGRQYldwRmVUVUtkWEpGSU1WVEpXZW1GU1lGWk5LQ0pCQ2tXUlJIZW1HS1lWQ1NWZ1RHZ0NBSUVNR0lBZz09"
+      }
+    }
+  ],
+  "links": {
+    "next": null,
+    "prev": null,
+    "first": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos?page=1",
+    "last": "https://api.escavador.com/api/v2/processos/numero_cnj/9213798-66.2024.2.00.6793/documentos?page=1"
+  },
+  "paginator": {
+    "current_page": 1,
+    "per_page": 20,
+    "total": 12,
+    "total_pages": 1
+  }
+}
+Exemplo de resposta (401):
+
+{
+  "error": "Unauthenticated"
+}
+Exemplo de resposta (402):
+
+{
+  "error": "Você não possui saldo em crédito da API."
+}
+Exemplo de resposta (404):
+
+{
+  "code": "NOT_FOUND",
+  "message": "Recurso não encontrado",
+  "errors": null,
+  "appends": null
+}
+Exemplo de resposta (422):
+
+{
+  "code": "NUMERO_CNJ_INVALIDO",
+  "message": "O número do processo não está no formato CNJ.",
+  "errors": null,
+  "appends": null
+}
+HTTP Request
+GET api/v2/processos/numero_cnj/{numero}/autos
+
+Headers
+Campo	Valor
+Authorization	Bearer {access_token}
+X-Requested-With	XMLHttpRequest
+URI Parameters
+Parâmetro	Tipo	Descrição
+numero	string	Número único do processo. Obrigatório estar no formato de CNJ.
+Exemplo: 0000000-00.0000.0.00.0000
+Query Parameters
+Parâmetro	Status	Descrição
+limit	opcional	int Quantidade de documentos por página. Os valores permitidos são 50 ou 100. Padrão: 50.
+Download do PDF de um Documento
+Permite baixar um documento de um processo em formato PDF, utilizando a numeração CNJ e uma chave de acesso exclusiva para cada documento.
+
+Acesse a lista de documentos públicos para mais detalhes sobre os documentos e a chave, fornecida por nós.
+
+Exemplo de requisição:
+
+curl -X GET -G "https://api.escavador.com/api/v2/processos/numero_cnj/0018063-19.2013.8.26.0002/documentos/1" \
+    -H "Authorization: Bearer {access_token}" \
+    -H "X-Requested-With: XMLHttpRequest"
+Exemplo de resposta (401):
+
+{
+  "error": "Unauthenticated"
+}
+Exemplo de resposta (402):
+
+{
+  "error": "Você não possui saldo em crédito da API."
+}
+Exemplo de resposta (404):
+
+{
+  "code": "NOT_FOUND",
+  "message": "Recurso não encontrado",
+  "errors": null,
+  "appends": null
+}
+HTTP Request
+GET api/v2/processos/numero_cnj/{numero}/documentos/{key}
+
+Headers
+Campo	Valor
+Authorization	Bearer {access_token}
+X-Requested-With	XMLHttpRequest
+URI Parameters
+Parâmetro	Tipo	Descrição
+numero	string	Número único do processo. Obrigatório estar no formato de CNJ.
+Exemplo: 0000000-00.0000.0.00.0000
+key	string	Chave disponibilizada pela nossa API
+Envolvidos de um processo
+Retorna uma lista dos envolvidos de um processo a partir da numeração CNJ.
+
+Exemplo de requisição:
+
+curl -X GET -G "https://api.escavador.com/api/v2/processos/numero_cnj/0018063-19.2013.8.26.0002/envolvidos" \
+    -H "Authorization: Bearer {access_token}" \
+    -H "X-Requested-With: XMLHttpRequest"
+// Esse é um exemplo de resposta bem-sucedida.
+Exemplo de resposta (200):
+
+{
+  "items": [
+    {
+      "nome": "Município de Gravataí / RS",
+      "quantidade_processos": 4177,
+      "tipo_pessoa": "JURIDICA",
+      "cpf": null,
+      "cnpj": "87.890.992/0001-58",
+      "participacoes_processo": [
+        {
+          "tipo": "REQUERIDO",
+          "tipo_normalizado": "Requerido",
+          "polo": "PASSIVO",
+          "prefixo": null,
+          "sufixo": null,
+          "advogados": [],
+          "fonte": {
+            "processo_fonte_id": 715246906,
+            "id": 2827,
+            "tipo": "TRIBUNAL",
+            "nome": "Tribunal de Justiça do Rio Grande do Sul",
+            "sigla": "TJRS",
+            "grau": 1,
+            "grau_formatado": "Primeiro Grau"
+          }
+        }
+      ]
+    },
+    {
+      "nome": "João da Silva",
+      "quantidade_processos": 567,
+      "tipo_pessoa": "FISICA",
+      "cpf": "123.456.789-00",
+      "cnpj": null,
+      "participacoes_processo": [
+        {
+          "tipo": "Apelado",
+          "tipo_normalizado": "Apelado",
+          "polo": "PASSIVO",
+          "prefixo": null,
+          "sufixo": null,
+          "advogados": [],
+          "fonte": {
+            "processo_fonte_id": 987654321,
+            "id": 5678,
+            "tipo": "TRIBUNAL",
+            "nome": "Supremo Tribunal Federal",
+            "sigla": "STF",
+            "grau": 3,
+            "grau_formatado": "Superior"
+          }
+        }
+      ]
+    },
+    {
+      "nome": "Município de Porto Alegre / RS",
+      "quantidade_processos": 2345,
+      "tipo_pessoa": "JURIDICA",
+      "cpf": null,
+      "cnpj": "98.765.432/0001-12",
+      "participacoes_processo": [
+        {
+          "tipo": "REQUERIDO",
+          "tipo_normalizado": "Requerido",
+          "polo": "ATIVO",
+          "prefixo": null,
+          "sufixo": null,
+          "advogados": [],
+          "fonte": {
+            "processo_fonte_id": 112233445,
+            "id": 9101,
+            "tipo": "TRIBUNAL",
+            "nome": "Tribunal Regional Federal",
+            "sigla": "TRF",
+            "grau": 1,
+            "grau_formatado": "Primeiro Grau"
+          }
+        }
+      ]
+    },
+    {
+      "nome": "Maria Oliveira",
+      "quantidade_processos": 890,
+      "tipo_pessoa": "FISICA",
+      "cpf": "987.654.321-00",
+      "cnpj": null,
+      "participacoes_processo": [
+        {
+          "tipo": "AGRAVADO",
+          "tipo_normalizado": "Agravado",
+          "polo": "PASSIVO",
+          "prefixo": null,
+          "sufixo": null,
+          "advogados": [
+            {
+              "nome": "Danielle Almeida",
+              "quantidade_processos": 1,
+              "tipo_pessoa": "FISICA",
+              "prefixo": null,
+              "sufixo": null,
+              "tipo": "Advogado",
+              "tipo_normalizado": "Advogado",
+              "polo": "ADVOGADO",
+              "cpf": null,
+              "cnpj": null
+            }
+          ],
+          "fonte": {
+            "processo_fonte_id": 223344556,
+            "id": 3344,
+            "tipo": "TRIBUNAL",
+            "nome": "Tribunal de Justiça do Rio de Janeiro",
+            "sigla": "TJRJ",
+            "grau": 2,
+            "grau_formatado": "Segundo Grau"
+          }
+        }
+      ]
+    },
+    {
+      "nome": "Associação ABC",
+      "quantidade_processos": 456,
+      "tipo_pessoa": "JURIDICA",
+      "cpf": null,
+      "cnpj": "11.222.333/0001-44",
+      "participacoes_processo": [
+        {
+          "tipo": "Apelado",
+          "tipo_normalizado": "Apelado",
+          "polo": null,
+          "prefixo": null,
+          "sufixo": null,
+          "advogados": [
+            {
+              "nome": "Ana Souza",
+              "quantidade_processos": 1,
+              "tipo_pessoa": "FISICA",
+              "prefixo": null,
+              "sufixo": null,
+              "tipo": "Advogado",
+              "tipo_normalizado": "Advogado",
+              "polo": "ADVOGADO",
+              "cpf": null,
+              "cnpj": null,
+              "oabs": [
+                {
+                  "uf": "SP",
+                  "tipo": "ADVOGADO",
+                  "numero": 123456
+                }
+              ]
+            }
+          ],
+          "fonte": {
+            "processo_fonte_id": 445566778,
+            "id": 5566,
+            "tipo": "TRIBUNAL",
+            "nome": "Tribunal de Justiça de Minas Gerais",
+            "sigla": "TJMG",
+            "grau": 1,
+            "grau_formatado": "Primeiro Grau"
+          }
+        }
+      ]
+    }
+  ],
+  "links": {
+    "next": "https://api.escavador.com/api/v2/processos/numero_cnj/87.890.992/0001-58/envolvidos?cursor=eyJlbnZvbHZpZG9fcHJvY2Vzc28uaWQiOjE5OSwiX3BvaW50c1RvTmV4dEl0ZW1zIjp0cnVlfQ&li=1262"
+  },
+  "paginator": {
+    "per_page": 20
+  }
+}
+Exemplo de resposta (401):
+
+{
+  "error": "Unauthenticated"
+}
+Exemplo de resposta (402):
+
+{
+  "error": "Você não possui saldo em crédito da API."
+}
+Exemplo de resposta (404):
+
+{
+  "code": "NOT_FOUND",
+  "message": "Recurso não encontrado",
+  "errors": null,
+  "appends": null
+}
+Exemplo de resposta (422):
+
+{
+  "code": "NUMERO_CNJ_INVALIDO",
+  "message": "O número do processo não está no formato CNJ.",
+  "errors": null,
+  "appends": null
+}
+HTTP Request
+GET api/v2/processos/numero_cnj/{numero}/envolvidos
+
+Headers
+Campo	Valor
+Authorization	Bearer {access_token}
+X-Requested-With	XMLHttpRequest
+URI Parameters
+Parâmetro	Tipo	Descrição
+numero	string	Número único do processo. Obrigatório estar no formato de CNJ.
+Exemplo: 0000000-00.0000.0.00.0000
+Query Parameters
+Parâmetro	Status	Descrição
+limit	opcional	Quantidade de envolvidos por página. Pode ser 50 ou 100.
+Monitoramento de novos processos
+Criar novo monitoramento
+O termo enviado será monitorado nas capas e nos envolvidos dos processos. Todos os processos que contiverem o termo serão enviados.
+
+Exemplo de requisição:
+
+curl -X POST "https://api.escavador.com/api/v2/monitoramentos/novos-processos" \
+    -H "Authorization: Bearer {access_token}" \
+    -H "X-Requested-With: XMLHttpRequest" \
+    -H "Content-Type: application/json" \
+    -d '{"termo":"Jo\u00e3o","variacoes":["Jo\u00e3o","Jo\u00e3ozinho"],"termos_auxiliares":[{"condicao":"CONTEM","termo":"Maria"},{"condicao":"NAO_CONTEM","termo":"Jo\u00e3o"},{"condicao":"CONTEM_ALGUMA","termo":"Jos\u00e9"}],"tribunais":["TJSP","TJMG"]}'
+// Esse é um exemplo de resposta bem-sucedida.
+Exemplo de resposta (200):
+
+{
+  "id": 111,
+  "termo": "Fulano",
+  "criado_em": "2023-11-23T18:12:12+00:00",
+  "variacoes": [],
+  "termos_auxiliares": [],
+  "tribunais_especificos": []
+}
+// Esse é um exemplo de monitoramento com variacoes.
+Exemplo de resposta (200):
+
+{
+  "id": 112,
+  "termo": "Fulano de tal",
+  "tipo": "TERMO",
+  "criado_em": "2023-11-23 18:15:13",
+  "variacoes": [
+    " de tal",
+    " de tal e tal"
+  ]
+}
+// Esse é um exemplo de monitoramento com termos auxiliares.
+Exemplo de resposta (200):
+
+{
+  "id": 112,
+  "termo": "Fulano de tal",
+  "tipo": "TERMO",
+  "criado_em": "2023-11-23 18:15:13",
+  "termos_auxiliares": {
+    "CONTEM": [
+      "Fulano"
+    ],
+    "NAO_CONTEM": [
+      "Fulano de tal"
+    ],
+    "CONTEM_ALGUMA": [
+      "Fulano",
+      "Fulano de tal"
+    ]
+  }
+}
+// Esse é um exemplo de monitoramento com termos auxiliares e variacoes.
+Exemplo de resposta (200):
+
+{
+  "id": 112,
+  "termo": "Fulano de tal",
+  "tipo": "TERMO",
+  "criado_em": "2023-11-23 18:15:13",
+  "variacoes": [
+    " de tal",
+    " de tal e tal"
+  ],
+  "termos_auxiliares": {
+    "CONTEM": [
+      "Fulano"
+    ],
+    "NAO_CONTEM": [
+      "Fulano de tal"
+    ],
+    "CONTEM_ALGUMA": [
+      "Fulano",
+      "Fulano de tal"
+    ]
+  }
+}
+Exemplo de resposta (401):
+
+{
+  "error": "Unauthenticated"
+}
+Exemplo de resposta (402):
+
+{
+  "error": "Você não possui saldo em crédito da API."
+}
+HTTP Request
+POST api/v2/monitoramentos/novos-processos
+
+Headers
+Campo	Valor
+Authorization	Bearer {access_token}
+X-Requested-With	XMLHttpRequest
+Content-Type	application/json
+Body Parameters
+Parâmetro	Tipo	Status	Descrição
+termo	string	obrigatório	Termo a ser monitorado. Pode ser o nome de um envolvido, um CPF/CNPJ ou algum termo genérico que apareça na capa do processo.
+variacoes	string[]	opcional	Lista de variações do termo a ser monitorado. Caso o processo dê match com alguma variação, será alertado. É permitido o registro de até duas variações.
+termos_auxiliares	string[][]	opcional	Lista de termos e condições para o alerta do monitoramento. As condições que podem ser utilizadas são as seguintes:
+CONTEM: apenas irá alertar se o processo conter todos os nomes informados.
+NAO_CONTEM: apenas irá alertar se não tiver nenhum dos termos informados.
+CONTEM_ALGUMA: apenas irá alertar, se tiver pelo menos 1 dos termos informados.
+tribunais	string[]	opcional	Lista de siglas dos tribunais específicos que o monitoramento deve ser feito, caso não seja informado, o monitoramento será feito em todos os tribunais.
+Callbacks relacionados
+Evento	Descrição
+novo_processo	Ocorre quando um monitoramento de novos processos encontra algum processo novo.
+Listar todos os monitoramentos
+Retorna todos os monitoramentos de novos processos do usuário
+
+Exemplo de requisição:
+
+curl -X GET -G "https://api.escavador.com/api/v2/monitoramentos/novos-processos" \
+    -H "Authorization: Bearer {access_token}" \
+    -H "X-Requested-With: XMLHttpRequest"
+// Esse é um exemplo de resposta bem-sucedida.
+Exemplo de resposta (200):
+
+{
+  "items": [
+    {
+      "id": 103,
+      "termo": "EMPRESA SA",
+      "criado_em": "2023-11-22T22:13:43+00:00",
+      "variacoes": [],
+      "termos_auxiliares": [],
+      "tribunais_especificos": []
+    },
+    {
+      "id": 111,
+      "termo": "Fulano",
+      "criado_em": "2023-11-23T18:12:12+00:00",
+      "variacoes": [],
+      "termos_auxiliares": [],
+      "tribunais_especificos": []
+    },
+    {
+      "id": 112,
+      "termo": "Fulano de tal",
+      "criado_em": "2023-11-23T18:15:13+00:00",
+      "variacoes": [
+        "Fulano d. tal",
+        "Fulano de t."
+      ],
+      "termos_auxiliares": {
+        "CONTEM": [
+          "Fulana"
+        ],
+        "NAO_CONTEM": [
+          "Outra pessoa"
+        ]
+      },
+      "tribunais_especificos": []
+    }
+  ],
+  "links": {
+    "next": null,
+    "prev": null,
+    "first": "http://api.escavador.com/api/v2/monitoramentos/novos-processos?page=1",
+    "last": "http://api.escavador.com/api/v2/monitoramentos/novos-processos?page=1"
+  },
+  "paginator": {
+    "current_page": 1,
+    "per_page": 20,
+    "total": 3,
+    "total_pages": 1
+  }
+}
+Exemplo de resposta (401):
+
+{
+  "error": "Unauthenticated"
+}
+Exemplo de resposta (402):
+
+{
+  "error": "Você não possui saldo em crédito da API."
+}
+HTTP Request
+GET api/v2/monitoramentos/novos-processos
+
+Headers
+Campo	Valor
+Authorization	Bearer {access_token}
+X-Requested-With	XMLHttpRequest
+Retornar um monitoramento específico
+Retorna um monitoramento de novos processos a partir do id
+
+Exemplo de requisição:
+
+curl -X GET -G "https://api.escavador.com/api/v2/monitoramentos/novos-processos/1" \
+    -H "Authorization: Bearer {access_token}" \
+    -H "X-Requested-With: XMLHttpRequest"
+// Esse é um exemplo de resposta bem-sucedida.
+Exemplo de resposta (200):
+
+{
+  "id": 111,
+  "termo": "Fulano",
+  "criado_em": "2023-11-23T18:12:12+00:00",
+  "variacoes": [],
+  "termos_auxiliares": [],
+  "tribunais_especificos": []
+}
+// Esse é um exemplo de monitoramento com variacoes.
+Exemplo de resposta (200):
+
+{
+  "id": 112,
+  "termo": "Fulano de tal",
+  "tipo": "TERMO",
+  "criado_em": "2023-11-23 18:15:13",
+  "variacoes": [
+    " de tal",
+    " de tal e tal"
+  ]
+}
+// Esse é um exemplo de monitoramento com termos auxiliares.
+Exemplo de resposta (200):
+
+{
+  "id": 112,
+  "termo": "Fulano de tal",
+  "tipo": "TERMO",
+  "criado_em": "2023-11-23 18:15:13",
+  "termos_auxiliares": {
+    "CONTEM": [
+      "Fulano"
+    ],
+    "NAO_CONTEM": [
+      "Fulano de tal"
+    ],
+    "CONTEM_ALGUMA": [
+      "Fulano",
+      "Fulano de tal"
+    ]
+  }
+}
+// Esse é um exemplo de monitoramento com termos auxiliares e variacoes.
+Exemplo de resposta (200):
+
+{
+  "id": 112,
+  "termo": "Fulano de tal",
+  "tipo": "TERMO",
+  "criado_em": "2023-11-23 18:15:13",
+  "variacoes": [
+    " de tal",
+    " de tal e tal"
+  ],
+  "termos_auxiliares": {
+    "CONTEM": [
+      "Fulano"
+    ],
+    "NAO_CONTEM": [
+      "Fulano de tal"
+    ],
+    "CONTEM_ALGUMA": [
+      "Fulano",
+      "Fulano de tal"
+    ]
+  }
+}
+Exemplo de resposta (401):
+
+{
+  "error": "Unauthenticated"
+}
+Exemplo de resposta (402):
+
+{
+  "error": "Você não possui saldo em crédito da API."
+}
+Exemplo de resposta (404):
+
+{
+  "error": "NotFound"
+}
+HTTP Request
+GET api/v2/monitoramentos/novos-processos/{id}
+
+Headers
+Campo	Valor
+Authorization	Bearer {access_token}
+X-Requested-With	XMLHttpRequest
+URI Parameters
+Parâmetro	Tipo	Descrição
+id	integer	Id do monitoramento.
+Remover um monitoramento
+Remove um monitoramento de novos processos a partir do id
+
+Exemplo de requisição:
+
+curl -X DELETE "https://api.escavador.com/api/v2/monitoramentos/novos-processos/1" \
+    -H "Authorization: Bearer {access_token}" \
+    -H "X-Requested-With: XMLHttpRequest"
+Exemplo de resposta (204):
+
+[]
+HTTP Request
+DELETE api/v2/monitoramentos/novos-processos/{id}
+
+Headers
+Campo	Valor
+Authorization	Bearer {access_token}
+X-Requested-With	XMLHttpRequest
+URI Parameters
+Parâmetro	Tipo	Descrição
+id	integer	Id do monitoramento.
+Listar processos encontrados
+Retorna os resultados do monitoramento de novos procesos, a partir do seu ID.
+
+Exemplo de requisição:
+
+curl -X GET -G "https://api.escavador.com/api/v2/monitoramentos/novos-processos/1/resultados" \
+    -H "Authorization: Bearer {access_token}" \
+    -H "X-Requested-With: XMLHttpRequest"
+// Esse é um exemplo de resposta bem-sucedida.
+Exemplo de resposta (200):
+
+{
+  "items": [
+    {
+      "numero_cnj": "3833283-72.2025.4.02.8208",
+      "data_inicio": "2025-03-05",
+      "tribunal": "TRT-11",
+      "match": "<b>João da Silva</b> requerente 92969887215 sind dos emp em estab bancarios no...",
+      "estado_origem": {
+        "nome": "Amazonas",
+        "sigla": "AM"
+      }
+    },
+    {
+      "numero_cnj": "6903212-72.2025.2.00.3259",
+      "data_inicio": "2024-12-09",
+      "tribunal": "TRT-10",
+      "match": "expedido(a) intimacao a(o) <b>João da Silva</b>",
+      "estado_origem": {
+        "nome": "Amazonas",
+        "sigla": "AM"
+      }
+    }
+  ],
+  "links": {
+    "next": null
+  },
+  "paginator": {
+    "per_page": 20
+  }
+}
+Exemplo de resposta (401):
+
+{
+  "error": "Unauthenticated"
+}
+Exemplo de resposta (402):
+
+{
+  "error": "Você não possui saldo em crédito da API."
+}
+Exemplo de resposta (404):
+
+{
+  "error": "NotFound"
+}
+HTTP Request
+GET api/v2/monitoramentos/novos-processos/{id}/resultados
+
+Headers
+Campo	Valor
+Authorization	Bearer {access_token}
+X-Requested-With	XMLHttpRequest
+URI Parameters
+Parâmetro	Tipo	Descrição
+id	integer	Id do monitoramento.
+Editar um monitoramento
+Edita um monitoramento de novos processos.
+
+A atualização dos campos variacoes, termos_auxiliares e tribunais segue uma lógica de substituição completa: ao enviar um campo, sua lista de valores substitui inteiramente a anterior. Campos não enviados na requisição permanecem inalterados.
+
+Exemplo de requisição:
+
+curl -X PATCH "https://api.escavador.com/api/v2/monitoramentos/novos-processos/1" \
+    -H "Authorization: Bearer {access_token}" \
+    -H "X-Requested-With: XMLHttpRequest" \
+    -H "Content-Type: application/json" \
+    -d '{"variacoes":["Jo\u00e3o","Jo\u00e3ozinho"],"termos_auxiliares":["{\"condicao\": \"CONTEM\"","\"termo\": \"Maria\"}","{\"condicao\": \"NAO_CONTEM\"","\"termo\": \"Jo\u00e3o\"}"],"tribunais":["TJSP","TJMG"]}'
+// Esse é um exemplo de resposta bem-sucedida.
+Exemplo de resposta (200):
+
+{
+  "id": 111,
+  "termo": "Fulano",
+  "criado_em": "2023-11-23T18:12:12+00:00",
+  "variacoes": [],
+  "termos_auxiliares": [],
+  "tribunais_especificos": []
+}
+// Esse é um exemplo de monitoramento com variacoes.
+Exemplo de resposta (200):
+
+{
+  "id": 112,
+  "termo": "Fulano de tal",
+  "tipo": "TERMO",
+  "criado_em": "2023-11-23 18:15:13",
+  "variacoes": [
+    " de tal",
+    " de tal e tal"
+  ]
+}
+// Esse é um exemplo de monitoramento com termos auxiliares.
+Exemplo de resposta (200):
+
+{
+  "id": 112,
+  "termo": "Fulano de tal",
+  "tipo": "TERMO",
+  "criado_em": "2023-11-23 18:15:13",
+  "termos_auxiliares": {
+    "CONTEM": [
+      "Fulano"
+    ],
+    "NAO_CONTEM": [
+      "Fulano de tal"
+    ],
+    "CONTEM_ALGUMA": [
+      "Fulano",
+      "Fulano de tal"
+    ]
+  }
+}
+// Esse é um exemplo de monitoramento com termos auxiliares e variacoes.
+Exemplo de resposta (200):
+
+{
+  "id": 112,
+  "termo": "Fulano de tal",
+  "tipo": "TERMO",
+  "criado_em": "2023-11-23 18:15:13",
+  "variacoes": [
+    " de tal",
+    " de tal e tal"
+  ],
+  "termos_auxiliares": {
+    "CONTEM": [
+      "Fulano"
+    ],
+    "NAO_CONTEM": [
+      "Fulano de tal"
+    ],
+    "CONTEM_ALGUMA": [
+      "Fulano",
+      "Fulano de tal"
+    ]
+  }
+}
+HTTP Request
+PATCH api/v2/monitoramentos/novos-processos/{id}
+
+Headers
+Campo	Valor
+Authorization	Bearer {access_token}
+X-Requested-With	XMLHttpRequest
+Content-Type	application/json
+URI Parameters
+Parâmetro	Tipo	Descrição
+id	integer	Id do monitoramento.
+Body Parameters
+Parâmetro	Tipo	Status	Descrição
+variacoes	string[]	opcional	Lista de variações do termo a ser monitorado. É permitido o registro de até duas variações.
+
+- Para remover todas as variações, envie um array vazio [].
+termos_auxiliares	object[]	opcional	Lista de termos e condições para o alerta do monitoramento. As condições que podem ser utilizadas são as seguintes:
+CONTEM: apenas irá alertar se o processo conter todos os nomes informados.
+NAO_CONTEM: apenas irá alertar se não tiver nenhum dos termos informados.
+CONTEM_ALGUMA: apenas irá alertar, se tiver pelo menos 1 dos termos informados.
+
+- Para substituir a lista existente, envie um novo array. A lista antiga será completamente descartada.
+Exemplo: Se existiam as regras [{"condicao": "CONTEM", "termo": "João"}] e você envia [{"condicao": "NAO_CONTEM", "termo": "Maria"}], a regra CONTEM original será removida e apenas a nova regra NAO_CONTEM permanecerá.
+- Para remover todos os termos auxiliares, envie um array vazio [].
+tribunais	string[]	opcional	Lista de siglas dos tribunais específicos onde o monitoramento deve ser feito.
+
+- Para remover todos os tribunais específicos (voltando a monitorar em todos os tribunais), envie um array vazio [].
+Monitoramento de processos
+Criar novo monitoramento
+O número do processo informado será monitorado nos tribunais e diários oficiais. Todas as movimentações e publicações encontradas serão enviadas. Ao criar um monitoramento, ele começará com o status PENDENTE e será alterado para ENCONTRADO assim que nosso robô localizar o processo no sistema do tribunal. Se o processo não for encontrado, o status será atualizado para NAO_ENCONTRADO e não haverá cobrança.
+
+Exemplo de requisição:
+
+curl -X POST "https://api.escavador.com/api/v2/monitoramentos/processos" \
+    -H "Authorization: Bearer {access_token}" \
+    -H "X-Requested-With: XMLHttpRequest" \
+    -H "Content-Type: application/json" \
+    -d '{"numero":"0000001-00.0000.0.00.0000"}'
+// Esse é um exemplo de resposta bem-sucedida.
+Exemplo de resposta (200):
+
+{
+  "id": 17,
+  "numero": "0000001-00.2024.6.14.0000",
+  "criado_em": "2024-11-19T20:35:09+00:00",
+  "data_ultima_verificacao": null,
+  "tribunais": [
+    {
+      "id": 50,
+      "nome": "Tribunal Regional Eleitoral do Pará",
+      "sigla": "TRE-PA",
+      "categoria": null
+    }
+  ],
+  "frequencia": "DIARIA",
+  "status": "PENDENTE"
+}
+Exemplo de resposta (401):
+
+{
+  "error": "Unauthenticated"
+}
+Exemplo de resposta (402):
+
+{
+  "error": "Você não possui saldo em crédito da API."
+}
+HTTP Request
+POST api/v2/monitoramentos/processos
+
+Headers
+Campo	Valor
+Authorization	Bearer {access_token}
+X-Requested-With	XMLHttpRequest
+Content-Type	application/json
+Body Parameters
+Parâmetro	Tipo	Status	Descrição
+numero	string	obrigatório	Númeração CNJ do processo.
+tribunal	string	opcional	Sigla do tribunal a ser monitorado. Caso não deseje acompanhar o processo no tribunal de origem, como em situações em que o processo está no STF com a mesma numeração.
+frequencia	string	opcional	Quantidade de dias em que o robô buscará atualizações nos sistemas dos tribunais.
+Valores permitidos:
+DIARIA: De segunda a sexta.
+SEMANAL: 1 vez na semana (O dia é escolhido pelo Escavador).
+Default: DIARIA.
+Callbacks relacionados
+Evento	Descrição
+nova_movimentacao	Ocorre quando um monitoramento de processo encontra uma nova movimentação no tribunal ou diário oficial.
+processo_verificado	Ocorre quando um monitoramento de processo vai ao tribunal, mas não encontra uma nova movimentação.
+processo_encontrado	É enviado assim que nosso robô localiza o processo no sistema do tribunal e o status do monitoramento é alterado para ENCONTRADO.
+processo_nao_encontrado	Ocorre quando o processo não é encontrado no sistema do tribunal e o status do monitoramento é alterado para NAO_ENCONTRADO.
+Listar todos os monitoramentos
+Retorna todos os monitoramentos de processos do usuário
+
+Exemplo de requisição:
+
+curl -X GET -G "https://api.escavador.com/api/v2/monitoramentos/processos" \
+    -H "Authorization: Bearer {access_token}" \
+    -H "X-Requested-With: XMLHttpRequest"
+// Esse é um exemplo de resposta bem-sucedida.
+Exemplo de resposta (200):
+
+{
+  "items": [
+    {
+      "id": 1566931,
+      "numero": "0800493-92.2024.8.14.0112",
+      "criado_em": "2024-10-02T16:15:45+00:00",
+      "data_ultima_verificacao": null,
+      "tribunais": [
+        {
+          "id": 90,
+          "nome": "Tribunal de Justiça do Pará",
+          "sigla": "TJPA",
+          "categoria": null
+        }
+      ],
+      "frequencia": "DIARIA",
+      "status": "ENCONTRADO"
+    },
+    {
+      "id": 1567024,
+      "numero": "1002089-72.2023.8.26.0260",
+      "criado_em": "2024-10-02T18:01:34+00:00",
+      "data_ultima_verificacao": null,
+      "tribunais": [
+        {
+          "id": 102,
+          "nome": "Tribunal de Justiça de São Paulo",
+          "sigla": "TJSP",
+          "categoria": null
+        }
+      ],
+      "frequencia": "DIARIA",
+      "status": "ENCONTRADO"
+    },
+    {
+      "id": 1567034,
+      "numero": "1157146-44.2024.8.26.0100",
+      "criado_em": "2024-10-02T18:15:48+00:00",
+      "data_ultima_verificacao": null,
+      "tribunais": [
+        {
+          "id": 102,
+          "nome": "Tribunal de Justiça de São Paulo",
+          "sigla": "TJSP",
+          "categoria": null
+        }
+      ],
+      "frequencia": "DIARIA",
+      "status": "ENCONTRADO"
+    }
+  ],
+  "links": {
+    "next": null,
+    "prev": null,
+    "first": "https://api.escavador.com/api/v2/monitoramentos/processos?page=1",
+    "last": "https://api.escavador.com/api/v2/monitoramentos/processos?page=1"
+  },
+  "paginator": {
+    "current_page": 1,
+    "per_page": 20,
+    "total": 3,
+    "total_pages": 1
+  }
+}
+Exemplo de resposta (401):
+
+{
+  "error": "Unauthenticated"
+}
+Exemplo de resposta (402):
+
+{
+  "error": "Você não possui saldo em crédito da API."
+}
+HTTP Request
+GET api/v2/monitoramentos/processos
+
+Headers
+Campo	Valor
+Authorization	Bearer {access_token}
+X-Requested-With	XMLHttpRequest
+Retornar um monitoramento específico
+Retorna um monitoramento de processos a partir do id
+
+Exemplo de requisição:
+
+curl -X GET -G "https://api.escavador.com/api/v2/monitoramentos/processos/1" \
+    -H "Authorization: Bearer {access_token}" \
+    -H "X-Requested-With: XMLHttpRequest"
+// Esse é um exemplo de resposta bem-sucedida.
+Exemplo de resposta (200):
+
+{
+  "id": 17,
+  "numero": "0000001-00.2024.6.14.0000",
+  "criado_em": "2024-11-19T20:35:09+00:00",
+  "data_ultima_verificacao": null,
+  "tribunais": [
+    {
+      "id": 50,
+      "nome": "Tribunal Regional Eleitoral do Pará",
+      "sigla": "TRE-PA",
+      "categoria": null
+    }
+  ],
+  "frequencia": "DIARIA",
+  "status": "PENDENTE"
+}
+Exemplo de resposta (401):
+
+{
+  "error": "Unauthenticated"
+}
+Exemplo de resposta (402):
+
+{
+  "error": "Você não possui saldo em crédito da API."
+}
+Exemplo de resposta (404):
+
+{
+  "error": "NotFound"
+}
+HTTP Request
+GET api/v2/monitoramentos/processos/{id}
+
+Headers
+Campo	Valor
+Authorization	Bearer {access_token}
+X-Requested-With	XMLHttpRequest
+URI Parameters
+Parâmetro	Tipo	Descrição
+id	integer	Id do monitoramento.
+Remover um monitoramento
+Remove um monitoramento de processos a partir do id
+
+Exemplo de requisição:
+
+curl -X DELETE "https://api.escavador.com/api/v2/monitoramentos/processos/1" \
+    -H "Authorization: Bearer {access_token}" \
+    -H "X-Requested-With: XMLHttpRequest"
+Exemplo de resposta (204):
+
+[]
+HTTP Request
+DELETE api/v2/monitoramentos/processos/{id}
+
+Headers
+Campo	Valor
+Authorization	Bearer {access_token}
+X-Requested-With	XMLHttpRequest
+URI Parameters
+Parâmetro	Tipo	Descrição
+id	integer	Id do monitoramento.

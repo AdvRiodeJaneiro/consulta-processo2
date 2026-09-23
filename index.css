@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Tema Claro (Início Padrão) */
+    --background: 30 14% 97%; /* #f8f7f6 */
+    --foreground: 244 47% 21%; /* #1e1b4b (deep-indigo) */
+    --card: 0 0% 100%;
+    --card-foreground: 244 47% 21%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 47 75% 52%; /* #dfb82a (primary) */
+    --accent-foreground: 244 47% 21%;
+    --primary: 47 75% 52%; /* #dfb82a */
+    --primary-foreground: 244 47% 21%;
+    --border: 214.3 31.8% 91.4%; /* slate-200 */
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    /* Tema Escuro */
+    --background: 44 32% 10%; /* #211d11 */
+    --foreground: 30 14% 97%;
+    --secondary: 222.2 47.4% 11.2%; /* slate-900 */
+    --secondary-foreground: 210 40% 98%;
+    --card: 222.2 47.4% 11.2%; /* slate-900 */
+    --card-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 47 75% 52%;
+    --accent-foreground: 244 47% 21%;
+    --border: 217 33% 17%; /* slate-800 */
+    --primary: 47 75% 52%;
+    --primary-foreground: 244 47% 21%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}

@@ -1,0 +1,6 @@
+
+{
+  "name": "Consulta Processo IA",
+  "description": "Uma plataforma inteligente que consulta processos judiciais via API e traduz o juridiquês para uma linguagem simples e clara usando Inteligência Artificial.",
+  "requestFramePermissions": []
+}
